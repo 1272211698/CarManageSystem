@@ -1,10 +1,10 @@
 package cn.zcbigdata.mybits_demo.entity;
 
-public class Manager {
+public class User {
     private Integer id;
-    private String username;
+    private String userName;
     private String password;
-    private String idcard_num;
+    private Integer admin;
 
     public Integer getId() {
         return id;
@@ -14,12 +14,12 @@ public class Manager {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -30,21 +30,21 @@ public class Manager {
         this.password = password;
     }
 
-    public String getIdcard_num() {
-        return idcard_num;
+    public Integer getAdmin() {
+        return admin;
     }
 
-    public void setIdcard_num(String idcard_num) {
-        this.idcard_num = idcard_num;
+    public void setAdmin(Integer admin) {
+        this.admin = admin;
     }
 
     @Override
     public String toString() {
-        return "manager{" +
+        return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
-                ", idcard_num=" + idcard_num +
+                ", admin=" + admin +
                 '}';
     }
 }
