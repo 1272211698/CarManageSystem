@@ -13,11 +13,13 @@ public class IUserServiceImpl implements IUserService {
     @Resource
     private UserMapper userMapper;
 
+    //用户登录接口实现
     @Override
     public User loginSubmit(User user) {
         return this.userMapper.loginSubmit(user);
     }
 
+    //用户注册接口实现
     @Override
     public Integer signUpSubmit(User user) {
         try {

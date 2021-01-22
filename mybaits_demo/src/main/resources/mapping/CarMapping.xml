@@ -11,16 +11,29 @@
         <result column="purchase" jdbcType="VARCHAR" property="purchase" />
         <result column="userid" jdbcType="INTEGER" property="userid" />
     </resultMap>
-
-    <select id="loginSubmit" resultMap="BaseResultMap" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
-        SELECT * FROM user WHERE userName = #{userName} AND password = #{password};
+    <!--根据userid获取车辆列表-->
+    <select id="selectCarListByUserid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT * FROM car WHERE userid = #{userid};
     </select>
-
-    <insert id="addCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
+    <!--根据userid获取用户车辆总数-->
+    <select id="selectUserCarCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*) FROM car WHERE userid = #{userid};
+    </select>
+    <!--根据车辆id获取车辆信息-->
+    <select id="selectCarById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT * FROM car WHERE id = #{id};
+    </select>
+    <!--用户前台新增车辆信息-->
+    <insert id="userAddCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
         INSERT INTO car(model, milage, capacity, production, purchase, userid) VALUES (#{model}, #{milage}, #{capacity}, #{production}, #{purchase}, #{userid});
     </insert>
-
-    <update id="updateCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
+    <!--用户前台更新车辆信息-->
+    <update id="userUpdateCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
         UPDATE car SET model = #{model},milage = #{milage}, capacity = #{capacity}, production = #{production}, purchase = #{purchase} WHERE id = #{id};
     </update>
+    <!--用户前台删除车辆信息-->
+    <delete id="userDeleteCarById" parameterType="java.lang.Integer">
+        DELETE FROM car WHERE id = #{id};
+    </delete>
+
 </mapper>

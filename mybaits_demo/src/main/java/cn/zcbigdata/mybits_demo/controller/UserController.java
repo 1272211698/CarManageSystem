@@ -20,11 +20,13 @@ public class UserController {
     @Resource
     private IUserService userService;
 
+    //登录页面接口
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(){
         return "login";
     }
 
+    //用户登录接口
     @RequestMapping(value = "/loginSubmit" , method = RequestMethod.GET)
     @ResponseBody
     public String loginSubmit(HttpServletRequest request){
@@ -46,11 +48,13 @@ public class UserController {
         return Strs.SUCCESS_RETURN_JSON;
     }
 
+    //注册页面接口
     @RequestMapping(value = "/signUp", method = RequestMethod.GET)
     public String signUpPage(){
         return "signUp";
     }
 
+    //用户登录接口
     @RequestMapping(value = "/signUpSubmit" , method = RequestMethod.POST)
     @ResponseBody
     public String signUpSubmit(HttpServletRequest request){
