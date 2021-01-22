@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zcbigdata.mybits_demo.mapper.CarMapper">
+
+    <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Car">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="model" jdbcType="VARCHAR" property="model" />
+        <result column="milage" jdbcType="DOUBLE" property="milage" />
+        <result column="capacity" jdbcType="DOUBLE" property="capacity" />
+        <result column="production" jdbcType="VARCHAR" property="production" />
+        <result column="purchase" jdbcType="VARCHAR" property="purchase" />
+        <result column="userid" jdbcType="INTEGER" property="userid" />
+    </resultMap>
+
+    <select id="loginSubmit" resultMap="BaseResultMap" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
+        SELECT * FROM user WHERE userName = #{userName} AND password = #{password};
+    </select>
+
+    <insert id="addCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
+        INSERT INTO car(model, milage, capacity, production, purchase, userid) VALUES (#{model}, #{milage}, #{capacity}, #{production}, #{purchase}, #{userid});
+    </insert>
+
+    <update id="updateCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
+        UPDATE car SET model = #{model},milage = #{milage}, capacity = #{capacity}, production = #{production}, purchase = #{purchase} WHERE id = #{id};
+    </update>
+</mapper>

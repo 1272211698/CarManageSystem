@@ -3,7 +3,7 @@ package cn.zcbigdata.mybits_demo.controller;
 import cn.zcbigdata.mybits_demo.Util.CheckNull;
 import cn.zcbigdata.mybits_demo.Util.Strs;
 import cn.zcbigdata.mybits_demo.entity.User;
-import cn.zcbigdata.mybits_demo.service.UserService;
+import cn.zcbigdata.mybits_demo.service.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Resource
-    private UserService userService;
+    private IUserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(){
@@ -51,7 +51,7 @@ public class UserController {
         return "signUp";
     }
 
-    @RequestMapping(value = "/signUpSubmit" , method = RequestMethod.GET)
+    @RequestMapping(value = "/signUpSubmit" , method = RequestMethod.POST)
     @ResponseBody
     public String signUpSubmit(HttpServletRequest request){
         String userName = request.getParameter("userName");
