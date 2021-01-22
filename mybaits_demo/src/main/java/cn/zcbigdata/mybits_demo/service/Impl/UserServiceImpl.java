@@ -17,4 +17,14 @@ public class UserServiceImpl implements UserService {
     public User loginSubmit(User user) {
         return this.userMapper.loginSubmit(user);
     }
+
+    @Override
+    public Integer signUpSubmit(User user) {
+        try {
+            return this.userMapper.signUpSubmit(user);
+        }catch (Exception e){
+            //e.printStackTrace();
+            return 0;
+        }
+    }
 }

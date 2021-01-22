@@ -46,5 +46,27 @@ public class UserController {
         return Strs.SUCCESS_RETURN_JSON;
     }
 
+    @RequestMapping(value = "/signUp", method = RequestMethod.GET)
+    public String signUpPage(){
+        return "signUp";
+    }
+
+    @RequestMapping(value = "/signUpSubmit" , method = RequestMethod.GET)
+    @ResponseBody
+    public String signUpSubmit(HttpServletRequest request){
+        String userName = request.getParameter("userName");
+        String password = request.getParameter("password");
+        if(!CheckNull.checkNull(new String[]{userName,password})){
+            return Strs.IS_NULL_RETURN_JSON;
+        }
+        User user = new User();
+        user.setUserName(userName.trim());
+        user.setPassword(password.trim());
+        int flag = this.userService.signUpSubmit(user);
+        if(flag != 1){
+            return Strs.FAIL_RETURN_JSON;
+        }
+        return Strs.SUCCESS_RETURN_JSON;
+    }
 
 }

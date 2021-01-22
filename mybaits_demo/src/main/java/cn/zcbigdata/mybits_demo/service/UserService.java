@@ -4,4 +4,5 @@ import cn.zcbigdata.mybits_demo.entity.User;
 
 public interface UserService {
     User loginSubmit(User user);
+    Integer signUpSubmit(User user);
 }

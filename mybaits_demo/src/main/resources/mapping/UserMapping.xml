@@ -13,5 +13,8 @@
         SELECT * FROM user WHERE userName = #{userName} AND password = #{password};
     </select>
 
+    <insert id="signUpSubmit" parameterType="cn.zcbigdata.mybits_demo.entity.User">
+        INSERT INTO user(userName, password) VALUES (#{userName}, #{password});
+    </insert>
 
 </mapper>
