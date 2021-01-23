@@ -11,4 +11,14 @@ public interface CarMapper {
     Car selectCarById(Integer id);//根据车辆id获取车辆信息
     List<Car> selectCarListByUserid(Integer userid);//根据userid获取车辆信息列表
     Integer selectUserCarCount(Integer userid);//根据userid获取车辆总数
+
+    List<Car> seeCar(int page, int limit) throws Exception;
+
+    int updataCar(Car car);
+
+    int addCar(Car car);
+
+    int deleteCar(int id);
+
+    int selectCount();
 }

@@ -11,6 +11,11 @@
         <result column="purchase" jdbcType="VARCHAR" property="purchase" />
         <result column="userid" jdbcType="INTEGER" property="userid" />
     </resultMap>
+        
+    <sql id="Base_Column_List" >
+   	id,model,milage,capacity,production,purchase,userid
+    </sql>
+
     <!--根据userid获取车辆列表-->
     <select id="selectCarListByUserid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT * FROM car WHERE userid = #{userid};
@@ -35,5 +40,40 @@
     <delete id="userDeleteCarById" parameterType="java.lang.Integer">
         DELETE FROM car WHERE id = #{id};
     </delete>
+
+
+    <select id="seeCar" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from car
+        limit #{param1},#{param2};
+    </select>
+
+    <delete id="deleteCar"  parameterType="java.lang.Integer">
+    delete from car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="addCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car" >
+    insert into car (userid, model,milage,capacity,production,purchase)
+    values (#{userid,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, #{milage,jdbcType=DOUBLE}, #{capacity,jdbcType=DOUBLE}, #{production,jdbcType=VARCHAR}, #{purchase,jdbcType=VARCHAR})
+   </insert>
+
+    <update id="updataCar"  parameterType="cn.zcbigdata.mybits_demo.entity.Car" >
+    update car
+    set userid = #{userid,jdbcType=INTEGER},
+      model = #{model,jdbcType=VARCHAR},
+      milage = #{milage,jdbcType=DOUBLE},
+      capacity = #{capacity,jdbcType=DOUBLE},
+      production = #{production,jdbcType=VARCHAR},
+      purchase = #{purchase,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+    select
+    count(*)
+    from car
+  </select>
 
 </mapper>
