@@ -48,6 +48,15 @@ public class UserController {
         return Strs.SUCCESS_RETURN_JSON;
     }
 
+    //用户登出接口
+    @RequestMapping(value = "/logout" , method = RequestMethod.GET)
+    @ResponseBody
+    public String logout(HttpServletRequest request){
+        HttpSession se = request.getSession();
+        se.invalidate();
+        return Strs.SUCCESS_RETURN_JSON;
+    }
+
     //注册页面接口
     @RequestMapping(value = "/signUp", method = RequestMethod.GET)
     public String signUpPage(){
