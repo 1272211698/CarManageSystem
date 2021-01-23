@@ -9,6 +9,10 @@ public class JsonUtil {
 	public static String listToLayJson(String[] fields, List<?> data) throws Exception {
 		StringBuilder re = new StringBuilder();
 		re.append("[{\"status\":0}, {\"message\": \"成功\" }, {\"count\": 1000},{\"rows\":{\"item\":[");
+		if(data == null || data.isEmpty()){
+			re.append("]}}]");
+			return re.toString();
+		}
 		for (Object object : data) {
 			re.append(beanToJson(fields, object));
 			re.append(',');
@@ -20,7 +24,11 @@ public class JsonUtil {
 
 	public static String listToJson(String[] fields, List<?> data) throws Exception {
 		StringBuilder re = new StringBuilder();
-		re.append("{\"code\":\"0000\",\"message\":\"成功\",\"data\":[");
+		re.append("{\"code\":\"0000\",\"msg\":\"成功\",\"data\":[");
+		if(data == null || data.isEmpty()){
+			re.append("]}");
+			return re.toString();
+		}
 		for (Object object : data) {
 			re.append(beanToJson(fields, object));
 			re.append(',');
@@ -32,7 +40,7 @@ public class JsonUtil {
 
 	// 对象转换为json，参数String[] fields为要转换的字段，Object object为待转换的对象
 	public static String objectToJson(String[] fields, Object object) throws Exception {
-		return "{\"code\":\"0000\",\"message\":\"成功\",\"data\":" + beanToJson(fields, object) + '}';
+		return "{\"code\":\"0000\",\"msg\":\"成功\",\"data\":" + beanToJson(fields, object) + '}';
 	}
 
 	// 将JavaBean对象转换为Json格式，参数String[] fields为要转换的字段，Object object为待转换的对象

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zcbigdata.mybits_demo.mapper.RecordMapper">
+
+    <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Record">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="plan" jdbcType="VARCHAR" property="plan" />
+        <result column="carid" jdbcType="INTEGER" property="carid" />
+        <result column="recordTime" jdbcType="VARCHAR" property="recordTime" />
+    </resultMap>
+    <!--根据车辆id查询用户id，用于鉴权-->
+    <select id="selectUseridByCarId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT userid FROM car WHERE id = #{carid};
+    </select>
+    <!--根据carid获取保养记录列表-->
+    <select id="selectRecordByCarid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT * FROM record WHERE carid = #{carid} ORDER BY recordTime DESC, id DESC;
+    </select>
+    <!--添加保养记录-->
+    <insert id="userAddRecord" parameterType="cn.zcbigdata.mybits_demo.entity.Record">
+        INSERT INTO record(plan, carid, recordTime) VALUES (#{plan}, #{carid}, #{recordTime});
+    </insert>
+    <!--修改保养记录-->
+    <update id="userUpdateRecord" parameterType="cn.zcbigdata.mybits_demo.entity.Record">
+        UPDATE record SET plan = #{plan} WHERE id = #{id};
+    </update>
+    <!--根据保养记录id获取保养记录-->
+    <select id="selectRecordById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT * FROM record WHERE id = #{id};
+    </select>
+    <!--删除保养记录-->
+    <delete id="userDeleteRecordById" parameterType="java.lang.Integer">
+        DELETE FROM record WHERE id = #{id};
+    </delete>
+
+
+</mapper>
