@@ -43,7 +43,7 @@ public class RecordController {
     }
 
     //前台添加保养记录接口
-    @RequestMapping(value = "/userAddRecord" , method = RequestMethod.GET)
+    @RequestMapping(value = "/userAddRecord" , method = RequestMethod.POST)
     @ResponseBody
     public String addRecord(HttpServletRequest request) {
         HttpSession se = request.getSession();
@@ -68,7 +68,7 @@ public class RecordController {
     }
 
     //前台修改保养记录接口
-    @RequestMapping(value = "/userUpdateRecord" , method = RequestMethod.GET)
+    @RequestMapping(value = "/userUpdateRecord" , method = RequestMethod.POST)
     @ResponseBody
     public String userUpdateRecord(HttpServletRequest request) {
         HttpSession se = request.getSession();
@@ -93,7 +93,7 @@ public class RecordController {
     }
 
     //前台删除保养记录接口
-    @RequestMapping(value = "/userDeleteRecord" , method = RequestMethod.GET)
+    @RequestMapping(value = "/userDeleteRecord" , method = RequestMethod.POST)
     @ResponseBody
     public String userDeleteRecord(HttpServletRequest request) {
         HttpSession se = request.getSession();
