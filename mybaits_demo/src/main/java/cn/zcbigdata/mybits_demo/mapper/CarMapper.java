@@ -17,13 +17,7 @@ public interface CarMapper {
 
     Integer selectUserCarCount(Integer userid);//根据userid获取车辆总数
 
-    List<Car> seeCar(int page, int limit) throws Exception;
-
-    int updataCar(Car car);
-
-    int addCar(Car car);
-
-    int deleteCar(int id);
+    List<Car> selectAll(int page, int limit) throws Exception;
 
     int selectCount();
 }

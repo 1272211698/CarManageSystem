@@ -53,24 +53,9 @@ public class ICarServiceImpl implements ICarService {
     }
 
     @Override
-    public List<Car> seeCar(int page, int limit) throws Exception {
+    public List<Car> selectAll(int page, int limit) throws Exception {
         int pageIndex = (page - 1) * limit;
-        return this.carMapper.seeCar(pageIndex, limit);
-    }
-
-    @Override
-    public int updataCar(Car car) {
-        return this.carMapper.updataCar(car);
-    }
-
-    @Override
-    public int addCar(Car car) {
-        return this.carMapper.addCar(car);
-    }
-
-    @Override
-    public int deleteCar(int id) {
-        return this.carMapper.deleteCar(id);
+        return this.carMapper.selectAll(pageIndex, limit);
     }
 
     @Override
