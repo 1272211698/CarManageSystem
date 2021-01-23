@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <title>登录页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+    <script src="../static/layui/layui.js" charset="utf-8"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
-<body>
-这里是登录页面
+
+<body style="background-image: url(../static/images/loginbackground.jpg);">
+    <div
+        style="border-radius: 20px; width: 500px; height: 300px; background:rgba(65,104,89,0.8); margin: auto; float: left; top: 0; left: 0; right: 0; bottom: 0; position: absolute; padding: 30px">
+        <div style="width: 100%; height: 50px; text-align: center; font-size: 30px; line-height: 50px;">欢迎登录</div>
+        <div style="width: 80px; height: 50px; margin-top: 10px; float: left; text-align: center; font-size: 18px; line-height: 50px;">用户名：</div>
+        <div style="width: 420px; height: 50px; margin-top: 10px; float: left; text-align: center; font-size: 18px; line-height: 50px;">
+            <input type="text" style="width: 370px; height: 50px; text-align: left; font-size: 18px; line-height: 50px;" id="userName">
+        </div>
+        <div style="width: 80px; height: 50px; margin-top: 10px; float: left; text-align: center; font-size: 18px; line-height: 50px;">密码：</div>
+        <div style="width: 420px; height: 50px; margin-top: 10px; float: left; text-align: center; font-size: 18px; line-height: 50px;">
+            <input type="password" style="width: 370px; height: 50px; text-align: left; font-size: 18px; line-height: 50px;" id="password">
+        </div>
+        <button type="button" class="layui-btn layui-btn-lg layui-btn-normal"
+            style="width: 100px; margin-left: 100px; margin-top: 40px;" onclick="loginSubmit()">登录</button>
+        <button type="button" class="layui-btn layui-btn-lg layui-btn-warm"
+            style="width: 100px; margin-left: 100px; margin-top: 40px;" onclick="goSignUp()">注册</button>
+        <!-- <div style="background-color: blue; width: 400px; height: 70px; margin-top: 22.5px; margin-left: 50px;">
+        
+    </div>
+    <div style="background-color: blue; width: 400px; height: 70px; margin-top: 22.5px; margin-left: 50px;">123</div>
+    <div style="background-color: blue; width: 400px; height: 70px; margin-top: 22.5px; margin-left: 50px;">123</div> -->
+    </div>
 </body>
+<script>
+    layui.use('layer', function () {
+        var layer = layui.layer;
+
+    });
+    function loginSubmit() {
+        var url = "http://localhost:8080/user/loginSubmit";
+
+        var data = {
+            "userName": $("#userName").val(),
+            "password": $("#password").val()
+        };
+        if(data.password == "" || data.password == ""){
+            layer.alert('请填写所有字段！');
+            return;
+        }
+        $.ajax({
+            type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+            url: url,    //传输地址的URL
+            data: data, //data代表我们的数据  key -value类型的数据
+            dataType:'JSON',
+            async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+            success: function (data)//success、error代表是否返回成功
+            {
+                layer.msg(data.msg);
+                if (data.code == "0000") {
+                    if (data.data.admin == 1) {
+                        window.location.href = 'http://localhost:8080/car/back'
+                    } else {
+                        window.location.href = 'http://localhost:8080/car/userCarList'
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("网络错误！");
+            }
+        });
+    }
+    function goSignUp(){
+        window.location.href = 'http://localhost:8080/user/signUp'
+    }
+</script>
+
 </html>

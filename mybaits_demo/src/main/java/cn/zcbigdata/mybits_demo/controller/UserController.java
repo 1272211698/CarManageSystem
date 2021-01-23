@@ -46,7 +46,11 @@ public class UserController {
         HttpSession se = request.getSession();
         se.setAttribute("userid", user.getId().toString());
         se.setAttribute("admin", user.getAdmin().toString());
-        return Strs.SUCCESS_RETURN_JSON;
+        if(user.getAdmin().equals(1)){
+            return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"data\":{\"admin\":\"1\"}}";
+        }else{
+            return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"data\":{\"admin\":\"0\"}}";
+        }
     }
 
     //用户登出接口
