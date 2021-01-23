@@ -3,10 +3,9 @@ package cn.zcbigdata.mybits_demo.controller;
 import cn.zcbigdata.mybits_demo.Util.JsonUtil;
 import cn.zcbigdata.mybits_demo.Util.Strs;
 import cn.zcbigdata.mybits_demo.entity.Notice;
-import cn.zcbigdata.mybits_demo.service.NoticeService;
+import cn.zcbigdata.mybits_demo.service.INoticeService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +21,7 @@ public class NoticeController {
     private static final Logger LOGGER = Logger.getLogger(NoticeController.class);
 
     @Resource
-    private NoticeService noticeService;
+    private INoticeService INoticeService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(){
@@ -45,7 +44,7 @@ public class NoticeController {
         }
         Notice notices = new Notice();
         notices.setNotice(notice);
-        int flag = noticeService.addNotice(notices);
+        int flag = INoticeService.addNotice(notices);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -73,7 +72,7 @@ public class NoticeController {
         Notice notices = new Notice();
         notices.setId(id);
         notices.setNotice(notice);
-        int flag = noticeService.updataNotice(notices);
+        int flag = INoticeService.updataNotice(notices);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -95,7 +94,7 @@ public class NoticeController {
             }
         }
         Integer id = Integer.valueOf(idString);
-        int flag = noticeService.deleteNotice(id);
+        int flag = INoticeService.deleteNotice(id);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -121,7 +120,7 @@ public class NoticeController {
         }
         Integer page = Integer.valueOf(pageString);
         Integer limit = Integer.valueOf(limitString);
-        List<Notice> notices = noticeService.seeNotice(page, limit);
+        List<Notice> notices = INoticeService.seeNotice(page, limit);
         String[] colums = { "id", "notice"};
         String data = JsonUtil.listToLayJson(colums, notices);
         return data;
@@ -131,7 +130,7 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String selectCount(HttpServletRequest request){
-        int count = noticeService.selectCount();
+        int count = INoticeService.selectCount();
         String data = String.valueOf(count);
         String json = "{\"code\":\"0000\",\"count\":" + data + "}";
         return json;

@@ -2,15 +2,14 @@ package cn.zcbigdata.mybits_demo.service.Impl;
 
 import cn.zcbigdata.mybits_demo.entity.Car;
 import cn.zcbigdata.mybits_demo.mapper.CarMapper;
-import cn.zcbigdata.mybits_demo.service.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.zcbigdata.mybits_demo.service.ICarService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class CarServiceImpl implements CarService {
+public class ICarServiceImpl implements ICarService {
 
     @Resource
     CarMapper carMapper;

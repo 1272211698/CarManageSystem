@@ -2,15 +2,14 @@ package cn.zcbigdata.mybits_demo.service.Impl;
 
 import cn.zcbigdata.mybits_demo.entity.Notice;
 import cn.zcbigdata.mybits_demo.mapper.NoticeMapper;
-import cn.zcbigdata.mybits_demo.service.NoticeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.zcbigdata.mybits_demo.service.INoticeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class NoticeServiceImpl implements NoticeService {
+public class INoticeServiceImpl implements INoticeService {
 
 
     @Resource

@@ -4,7 +4,7 @@ import cn.zcbigdata.mybits_demo.entity.Car;
 
 import java.util.List;
 
-public interface CarService {
+public interface ICarService {
     List<Car> seeCar(int page, int limit) throws Exception;
 
     int updataCar(Car car);

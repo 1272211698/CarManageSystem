@@ -2,10 +2,9 @@ package cn.zcbigdata.mybits_demo.controller;
 import cn.zcbigdata.mybits_demo.Util.JsonUtil;
 import cn.zcbigdata.mybits_demo.Util.Strs;
 import cn.zcbigdata.mybits_demo.entity.Car;
-import cn.zcbigdata.mybits_demo.service.CarService;
+import cn.zcbigdata.mybits_demo.service.ICarService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +20,7 @@ public class CarController {
     private static final Logger LOGGER = Logger.getLogger(CarController.class);
 
     @Resource
-    private CarService carService;
+    private ICarService ICarService;
 
     @RequestMapping(value = "/back", method = RequestMethod.GET)
     public String backPage(){
@@ -67,7 +66,7 @@ public class CarController {
             car.setCapacity(capacity);
             car.setProduction(production);
             car.setPurchase(purchase);
-            int flag = carService.addCar(car);
+            int flag = ICarService.addCar(car);
             if (flag == 1) {
                 return Strs.SUCCESS_RETURN_JSON;
             } else {
@@ -113,7 +112,7 @@ public class CarController {
             car.setCapacity(capacity);
             car.setProduction(production);
             car.setPurchase(purchase);
-            int flag = carService.updataCar(car);
+            int flag = ICarService.updataCar(car);
             if (flag == 1) {
                 return Strs.SUCCESS_RETURN_JSON;
             } else {
@@ -135,7 +134,7 @@ public class CarController {
             }
         }
         Integer id = Integer.valueOf(idString);
-        int flag = carService.deleteCar(id);
+        int flag = ICarService.deleteCar(id);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -161,7 +160,7 @@ public class CarController {
         }
         Integer page = Integer.valueOf(pageString);
         Integer limit = Integer.valueOf(limitString);
-        List<Car> cars = carService.seeCar(page, limit);
+        List<Car> cars = ICarService.seeCar(page, limit);
         String[] colums = { "id", "model", "milage", "capacity", "production", "purchase", "userid"};
         String data = JsonUtil.listToLayJson(colums, cars);
         return data;
@@ -171,7 +170,7 @@ public class CarController {
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String selectCount(HttpServletRequest request){
-        int count = carService.selectCount();
+        int count = ICarService.selectCount();
         String data = String.valueOf(count);
         String json = "{\"code\":\"0000\",\"count\":" + data + "}";
         return json;

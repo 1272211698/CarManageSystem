@@ -2,15 +2,14 @@ package cn.zcbigdata.mybits_demo.service.Impl;
 
 import cn.zcbigdata.mybits_demo.entity.Plan;
 import cn.zcbigdata.mybits_demo.mapper.PlanMapper;
-import cn.zcbigdata.mybits_demo.service.PlanService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.zcbigdata.mybits_demo.service.IPlanService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class PlanServiceImpl implements PlanService {
+public class IPlanServiceImpl implements IPlanService {
 
     @Resource
     PlanMapper planMapper;

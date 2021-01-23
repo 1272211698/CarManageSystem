@@ -4,7 +4,7 @@ import cn.zcbigdata.mybits_demo.entity.Notice;
 
 import java.util.List;
 
-public interface NoticeService {
+public interface INoticeService {
     List<Notice> seeNotice(int page, int limit) throws Exception;
 
     int updataNotice(Notice notice);

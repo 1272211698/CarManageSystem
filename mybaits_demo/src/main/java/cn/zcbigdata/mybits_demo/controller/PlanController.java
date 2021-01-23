@@ -3,10 +3,9 @@ package cn.zcbigdata.mybits_demo.controller;
 import cn.zcbigdata.mybits_demo.Util.JsonUtil;
 import cn.zcbigdata.mybits_demo.Util.Strs;
 import cn.zcbigdata.mybits_demo.entity.Plan;
-import cn.zcbigdata.mybits_demo.service.PlanService;
+import cn.zcbigdata.mybits_demo.service.IPlanService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +19,7 @@ public class PlanController {
     private static final Logger LOGGER = Logger.getLogger(PlanController.class);
 
     @Resource
-    private PlanService planService;
+    private IPlanService IPlanService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(){
@@ -43,7 +42,7 @@ public class PlanController {
         }
         Plan plans = new Plan();
         plans.setPlan(plan);
-        int flag = planService.addPlan(plans);
+        int flag = IPlanService.addPlan(plans);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -71,7 +70,7 @@ public class PlanController {
         Plan plans = new Plan();
         plans.setId(id);
         plans.setPlan(plan);
-        int flag = planService.updataPlan(plans);
+        int flag = IPlanService.updataPlan(plans);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -93,7 +92,7 @@ public class PlanController {
             }
         }
         Integer id = Integer.valueOf(idString);
-        int flag = planService.deletePlan(id);
+        int flag = IPlanService.deletePlan(id);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -119,7 +118,7 @@ public class PlanController {
         }
         Integer page = Integer.valueOf(pageString);
         Integer limit = Integer.valueOf(limitString);
-        List<Plan> plans = planService.seePlan(page, limit);
+        List<Plan> plans = IPlanService.seePlan(page, limit);
         String[] colums = { "id", "plan"};
         String data = JsonUtil.listToLayJson(colums, plans);
         return data;
@@ -129,7 +128,7 @@ public class PlanController {
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String selectCount(HttpServletRequest request){
-        int count = planService.selectCount();
+        int count = IPlanService.selectCount();
         String data = String.valueOf(count);
         String json = "{\"code\":\"0000\",\"count\":" + data + "}";
         return json;

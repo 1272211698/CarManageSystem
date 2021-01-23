@@ -4,7 +4,7 @@ import cn.zcbigdata.mybits_demo.entity.Suggest;
 
 import java.util.List;
 
-public interface SuggestService {
+public interface ISuggestService {
 
     int addSuggest(Suggest suggest);
 

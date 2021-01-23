@@ -2,13 +2,13 @@ package cn.zcbigdata.mybits_demo.service.Impl;
 
 import cn.zcbigdata.mybits_demo.entity.Suggest;
 import cn.zcbigdata.mybits_demo.mapper.SuggestMapper;
-import cn.zcbigdata.mybits_demo.service.SuggestService;
+import cn.zcbigdata.mybits_demo.service.ISuggestService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class SuggestServiceImpl implements SuggestService {
+public class ISuggestServiceImpl implements ISuggestService {
 
     @Resource
     SuggestMapper suggestMapper;

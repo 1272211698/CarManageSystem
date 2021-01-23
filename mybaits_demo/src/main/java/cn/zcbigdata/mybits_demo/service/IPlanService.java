@@ -4,7 +4,7 @@ import cn.zcbigdata.mybits_demo.entity.Plan;
 
 import java.util.List;
 
-public interface PlanService {
+public interface IPlanService {
 
     List<Plan> seePlan(int page, int limit) throws Exception;
 

@@ -3,10 +3,9 @@ package cn.zcbigdata.mybits_demo.controller;
 import cn.zcbigdata.mybits_demo.Util.JsonUtil;
 import cn.zcbigdata.mybits_demo.Util.Strs;
 import cn.zcbigdata.mybits_demo.entity.Suggest;
-import cn.zcbigdata.mybits_demo.service.SuggestService;
+import cn.zcbigdata.mybits_demo.service.ISuggestService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +21,7 @@ public class SuggestController {
     private static final Logger LOGGER = Logger.getLogger(SuggestController.class);
 
     @Resource
-    private SuggestService suggestService;
+    private ISuggestService ISuggestService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(){
@@ -45,7 +44,7 @@ public class SuggestController {
         }
         Suggest suggests = new Suggest();
         suggests.setSuggest(suggest);
-        int flag = suggestService.addSuggest(suggests);
+        int flag = ISuggestService.addSuggest(suggests);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -67,7 +66,7 @@ public class SuggestController {
             }
         }
         Integer id = Integer.valueOf(idString);
-        int flag = suggestService.deleteSuggest(id);
+        int flag = ISuggestService.deleteSuggest(id);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -93,7 +92,7 @@ public class SuggestController {
         }
         Integer page = Integer.valueOf(pageString);
         Integer limit = Integer.valueOf(limitString);
-        List<Suggest> suggests = suggestService.seeSuggest(page, limit);
+        List<Suggest> suggests = ISuggestService.seeSuggest(page, limit);
         String[] colums = { "id", "suggest"};
         String data = JsonUtil.listToLayJson(colums, suggests);
         return data;
@@ -103,7 +102,7 @@ public class SuggestController {
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String selectCount(HttpServletRequest request){
-        int count = suggestService.selectCount();
+        int count = ISuggestService.selectCount();
         String data = String.valueOf(count);
         String json = "{\"code\":\"0000\",\"count\":" + data + "}";
         return json;
