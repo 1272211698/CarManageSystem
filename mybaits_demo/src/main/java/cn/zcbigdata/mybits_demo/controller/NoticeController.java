@@ -1,5 +1,7 @@
 package cn.zcbigdata.mybits_demo.controller;
 
+import cn.zcbigdata.mybits_demo.Util.CheckNull;
+import cn.zcbigdata.mybits_demo.Util.CheckUserLogin;
 import cn.zcbigdata.mybits_demo.Util.JsonUtil;
 import cn.zcbigdata.mybits_demo.Util.Strs;
 import cn.zcbigdata.mybits_demo.entity.Notice;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,15 +35,14 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping(value = "/addNotice", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String addNotice(HttpServletRequest request) {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
         // 插入数据库
         String notice = request.getParameter("notice");
-        if ("".equals(notice)) {
+        if (!CheckNull.checkNull(new String[]{notice})) {
             return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            notice = notice.trim();
-            if (notice.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
         }
         Notice notices = new Notice();
         notices.setNotice(notice);
@@ -56,21 +58,18 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping(value = "/updataNotice", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String updataNotice(HttpServletRequest request) {
-        // 插入数据库
-        String idString = request.getParameter("id");
-        String notice = request.getParameter("notice");
-        if ("".equals(idString) || "".equals(notice)) {
-            return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            idString = idString.trim();
-            notice = notice.trim();
-            if (idString.length() == 0 || notice.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
         }
-        Integer id = Integer.valueOf(idString);
+        // 插入数据库
+        String idStr = request.getParameter("id");
+        String notice = request.getParameter("notice");
+        if (!CheckNull.checkNull(new String[]{idStr, notice})) {
+            return Strs.IS_NULL_RETURN_JSON;
+        }
         Notice notices = new Notice();
-        notices.setId(id);
+        notices.setId(Integer.valueOf(idStr.trim()));
         notices.setNotice(notice);
         int flag = INoticeService.updataNotice(notices);
         if (flag == 1) {
@@ -84,17 +83,15 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping(value = "/deleteNotice", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String deleteNotice(HttpServletRequest request) {
-        String idString = request.getParameter("id");
-        if (idString == null) {
-            return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            idString = idString.trim();
-            if (idString.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
         }
-        Integer id = Integer.valueOf(idString);
-        int flag = INoticeService.deleteNotice(id);
+        String idStr = request.getParameter("id");
+        if (!CheckNull.checkNull(new String[]{idStr})) {
+            return Strs.IS_NULL_RETURN_JSON;
+        }
+        int flag = INoticeService.deleteNotice(Integer.valueOf(idStr.trim()));
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -107,20 +104,16 @@ public class NoticeController {
     @RequestMapping(value = "/seeNotice", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String seeNotice(HttpServletRequest request) throws Exception {
         request.setCharacterEncoding("utf-8");
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
         String pageString = request.getParameter("page");
         String limitString = request.getParameter("limit");
-        if (pageString == null || limitString == null) {
+        if (!CheckNull.checkNull(new String[]{pageString, limitString})) {
             return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            pageString = pageString.trim();
-            limitString = limitString.trim();
-            if (pageString.length() == 0 || limitString.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
         }
-        Integer page = Integer.valueOf(pageString);
-        Integer limit = Integer.valueOf(limitString);
-        List<Notice> notices = INoticeService.seeNotice(page, limit);
+        List<Notice> notices = INoticeService.seeNotice(Integer.valueOf(pageString), Integer.valueOf(limitString));
         String[] colums = {"id", "notice"};
         return JsonUtil.listToLayJson(colums, notices);
     }
@@ -129,9 +122,13 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String selectCount(HttpServletRequest request) {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
         int count = INoticeService.selectCount();
         String data = String.valueOf(count);
-        return "{\"code\":\"0000\",\"count\":" + data + "}";
+        return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"count\":\"" + data + "\"}";
     }
 
 }

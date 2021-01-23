@@ -181,11 +181,15 @@
                 async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
                 success: function (res)
                 {
-                    layer.msg("删除成功");
-                    //刷新页面
-                    table.reload('test', {
-                        url: 'http://localhost:8080/suggest/seeSuggest'
-                    });
+                    if(res.code == "7777"){
+                        layer.msg("账号已过期，请重新登陆");
+                    }else{
+                        layer.msg("删除成功");
+                        //刷新页面
+                        table.reload('test', {
+                            url: 'http://localhost:8080/suggest/seeSuggest'
+                        });
+                    }
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
                     alert(typeof(errorThrown));

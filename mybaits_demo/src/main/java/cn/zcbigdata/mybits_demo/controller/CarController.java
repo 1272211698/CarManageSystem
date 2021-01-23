@@ -42,7 +42,7 @@ public class CarController {
     }
 
     //添加汽车接口
-    @RequestMapping(value = "/userAddCar", method = RequestMethod.POST)
+    @RequestMapping(value = "/userAddCar", method = RequestMethod.GET)
     @ResponseBody
     public String UserAddCar(HttpServletRequest request) {
         HttpSession se = request.getSession();
@@ -74,7 +74,7 @@ public class CarController {
     }
 
     //修改车辆信息接口
-    @RequestMapping(value = "/userUpdateCar", method = RequestMethod.POST)
+    @RequestMapping(value = "/userUpdateCar", method = RequestMethod.GET)
     @ResponseBody
     public String userUpdateCar(HttpServletRequest request) {
         HttpSession se = request.getSession();
@@ -108,7 +108,7 @@ public class CarController {
     }
 
     //删除车辆信息接口
-    @RequestMapping(value = "/userDeleteCar", method = RequestMethod.POST)
+    @RequestMapping(value = "/userDeleteCar", method = RequestMethod.GET)
     @ResponseBody
     public String userDeleteCar(HttpServletRequest request) {
         HttpSession se = request.getSession();
@@ -152,135 +152,21 @@ public class CarController {
         return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"count\":\"" + count + "\"}";
     }
 
-    // 添加内置车辆
-    @ResponseBody
-    @RequestMapping(value = "/addCar", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-    public String addCar(HttpServletRequest request) {
-        // 插入数据库
-        String useridString = request.getParameter("userid");
-        String model = request.getParameter("model");
-        String milageString = request.getParameter("milage");
-        String capacityString = request.getParameter("capacity");
-        String production = request.getParameter("production");
-        String purchase = request.getParameter("purchase");
-        if ("".equals(useridString) || "".equals(model) || "".equals(milageString) || "".equals(capacityString) || "".equals(production) || "".equals(purchase)) {
-            return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            useridString = useridString.trim();
-            model = model.trim();
-            milageString = milageString.trim();
-            capacityString = capacityString.trim();
-            production = production.trim();
-            purchase = purchase.trim();
-            if (useridString.length() == 0 || model.length() == 0 || milageString.length() == 0 || capacityString.length() == 0 || production.length() == 0 || purchase.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
-        }
-        Integer userid = Integer.valueOf(useridString);
-        Double milage = Double.valueOf(milageString);
-        Double capacity = Double.valueOf(capacityString);
-        Car car = new Car();
-        car.setUserid(userid);
-        car.setModel(model);
-        car.setMilage(milage);
-        car.setCapacity(capacity);
-        car.setProduction(production);
-        car.setPurchase(purchase);
-        int flag = ICarService.addCar(car);
-        if (flag == 1) {
-            return Strs.SUCCESS_RETURN_JSON;
-        } else {
-            return Strs.FAIL_RETURN_JSON;
-        }
-    }
-
-    // 修改车辆信息
-    @ResponseBody
-    @RequestMapping(value = "/updataCar", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-    public String updataCar(HttpServletRequest request) {
-        // 插入数据库
-        String idString = request.getParameter("id");
-        String useridString = request.getParameter("userid");
-        String model = request.getParameter("model");
-        String milageString = request.getParameter("milage");
-        String capacityString = request.getParameter("capacity");
-        String production = request.getParameter("production");
-        String purchase = request.getParameter("purchase");
-        if ("".equals(idString) || "".equals(useridString) || "".equals(model) || "".equals(milageString) || "".equals(capacityString) || "".equals(production) || "".equals(purchase)) {
-            return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            idString = idString.trim();
-            useridString = useridString.trim();
-            model = model.trim();
-            milageString = milageString.trim();
-            capacityString = capacityString.trim();
-            production = production.trim();
-            purchase = purchase.trim();
-            if (idString.length() == 0 || useridString.length() == 0 || model.length() == 0 || milageString.length() == 0 || capacityString.length() == 0 || production.length() == 0 || purchase.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
-        }
-        Integer id = Integer.valueOf(idString);
-        Integer userid = Integer.valueOf(useridString);
-        Double milage = Double.valueOf(milageString);
-        Double capacity = Double.valueOf(capacityString);
-        Car car = new Car();
-        car.setId(id);
-        car.setUserid(userid);
-        car.setModel(model);
-        car.setMilage(milage);
-        car.setCapacity(capacity);
-        car.setProduction(production);
-        car.setPurchase(purchase);
-        int flag = ICarService.updataCar(car);
-        if (flag == 1) {
-            return Strs.SUCCESS_RETURN_JSON;
-        } else {
-            return Strs.FAIL_RETURN_JSON;
-        }
-    }
-
-    // 删除用户信息
-    @ResponseBody
-    @RequestMapping(value = "/deleteCar", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-    public String deleteCar(HttpServletRequest request) {
-        String idString = request.getParameter("id");
-        if (idString == null) {
-            return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            idString = idString.trim();
-            if (idString.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
-        }
-        Integer id = Integer.valueOf(idString);
-        int flag = ICarService.deleteCar(id);
-        if (flag == 1) {
-            return Strs.SUCCESS_RETURN_JSON;
-        } else {
-            return Strs.FAIL_RETURN_JSON;
-        }
-    }
-
     // 查询全部
     @ResponseBody
-    @RequestMapping(value = "/seeCar", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-    public String seeCar(HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/selectAll", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+    public String selectAll(HttpServletRequest request) throws Exception {
         request.setCharacterEncoding("utf-8");
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
         String pageString = request.getParameter("page");
         String limitString = request.getParameter("limit");
-        if (pageString == null || limitString == null) {
+        if (!CheckNull.checkNull(new String[]{pageString, limitString})) {
             return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            pageString = pageString.trim();
-            limitString = limitString.trim();
-            if (pageString.length() == 0 || limitString.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
         }
-        Integer page = Integer.valueOf(pageString);
-        Integer limit = Integer.valueOf(limitString);
-        List<Car> cars = ICarService.seeCar(page, limit);
+        List<Car> cars = ICarService.selectAll(Integer.valueOf(pageString), Integer.valueOf(limitString));
         String[] colums = {"id", "model", "milage", "capacity", "production", "purchase", "userid"};
         return JsonUtil.listToLayJson(colums, cars);
     }
@@ -289,9 +175,13 @@ public class CarController {
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String selectCount(HttpServletRequest request) {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
         int count = ICarService.selectCount();
         String data = String.valueOf(count);
-        return "{\"code\":\"0000\",\"count\":" + data + "}";
+        return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"count\":\"" + data + "\"}";
     }
 
     @ResponseBody

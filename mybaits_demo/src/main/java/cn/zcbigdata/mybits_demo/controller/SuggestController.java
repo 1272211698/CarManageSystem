@@ -1,5 +1,7 @@
 package cn.zcbigdata.mybits_demo.controller;
 
+import cn.zcbigdata.mybits_demo.Util.CheckNull;
+import cn.zcbigdata.mybits_demo.Util.CheckUserLogin;
 import cn.zcbigdata.mybits_demo.Util.JsonUtil;
 import cn.zcbigdata.mybits_demo.Util.Strs;
 import cn.zcbigdata.mybits_demo.entity.Suggest;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,15 +35,14 @@ public class SuggestController {
     @ResponseBody
     @RequestMapping(value = "/addSuggest", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String addSuggest(HttpServletRequest request) {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
         // 插入数据库
         String suggest = request.getParameter("suggest");
-        if ("".equals(suggest)) {
+        if (!CheckNull.checkNull(new String[]{suggest})) {
             return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            suggest = suggest.trim();
-            if (suggest.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
         }
         Suggest suggests = new Suggest();
         suggests.setSuggest(suggest);
@@ -56,17 +58,15 @@ public class SuggestController {
     @ResponseBody
     @RequestMapping(value = "/deleteSuggest", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String deleteSuggest(HttpServletRequest request) {
-        String idString = request.getParameter("id");
-        if (idString == null) {
-            return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            idString = idString.trim();
-            if (idString.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
         }
-        Integer id = Integer.valueOf(idString);
-        int flag = ISuggestService.deleteSuggest(id);
+        String idStr = request.getParameter("id");
+        if (!CheckNull.checkNull(new String[]{idStr})) {
+            return Strs.IS_NULL_RETURN_JSON;
+        }
+        int flag = ISuggestService.deleteSuggest(Integer.valueOf(idStr.trim()));
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
@@ -79,20 +79,16 @@ public class SuggestController {
     @RequestMapping(value = "/seeSuggest", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String seeSuggest(HttpServletRequest request) throws Exception {
         request.setCharacterEncoding("utf-8");
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
         String pageString = request.getParameter("page");
         String limitString = request.getParameter("limit");
-        if (pageString == null || limitString == null) {
+        if (!CheckNull.checkNull(new String[]{pageString, limitString})) {
             return Strs.IS_NULL_RETURN_JSON;
-        } else {
-            pageString = pageString.trim();
-            limitString = limitString.trim();
-            if (pageString.length() == 0 || limitString.length() == 0) {
-                return Strs.IS_NULL_RETURN_JSON;
-            }
         }
-        Integer page = Integer.valueOf(pageString);
-        Integer limit = Integer.valueOf(limitString);
-        List<Suggest> suggests = ISuggestService.seeSuggest(page, limit);
+        List<Suggest> suggests = ISuggestService.seeSuggest(Integer.valueOf(pageString), Integer.valueOf(limitString));
         String[] colums = {"id", "suggest"};
         return JsonUtil.listToLayJson(colums, suggests);
     }
@@ -101,8 +97,12 @@ public class SuggestController {
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
     public String selectCount(HttpServletRequest request) {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
         int count = ISuggestService.selectCount();
         String data = String.valueOf(count);
-        return "{\"code\":\"0000\",\"count\":" + data + "}";
+        return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"count\":\"" + data + "\"}";
     }
 }
