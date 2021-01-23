@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zcbigdata.mybits_demo.mapper.CarMapper" >
+    <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Car" >
+        <id      column="id"        property="id"        jdbcType="INTEGER" />
+        <result  column="model"  property="model"  jdbcType="VARCHAR" />
+        <result  column="milage"  property="milage"  jdbcType="DOUBLE" />
+        <result  column="capacity"  property="capacity"  jdbcType="DOUBLE" />
+        <result  column="production"  property="production"  jdbcType="VARCHAR" />
+        <result  column="purchase"  property="purchase"  jdbcType="VARCHAR" />
+        <result  column="userid"  property="userid"  jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+   	id,model,milage,capacity,production,purchase,userid
+    </sql>
+
+    <select id="seeCar" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from car
+        limit #{param1},#{param2};
+    </select>
+
+    <delete id="deleteCar"  parameterType="java.lang.Integer">
+    delete from car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="addCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car" >
+    insert into car (userid, model,milage,capacity,production,purchase)
+    values (#{userid,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, #{milage,jdbcType=DOUBLE}, #{capacity,jdbcType=DOUBLE}, #{production,jdbcType=VARCHAR}, #{purchase,jdbcType=VARCHAR})
+   </insert>
+
+    <update id="updataCar"  parameterType="cn.zcbigdata.mybits_demo.entity.Car" >
+    update car
+    set userid = #{userid,jdbcType=INTEGER},
+      model = #{model,jdbcType=VARCHAR},
+      milage = #{milage,jdbcType=DOUBLE},
+      capacity = #{capacity,jdbcType=DOUBLE},
+      production = #{production,jdbcType=VARCHAR},
+      purchase = #{purchase,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+    select
+    count(*)
+    from car
+  </select>
+
+</mapper>
