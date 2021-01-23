@@ -24,7 +24,7 @@ public class NoticeController {
     private INoticeService INoticeService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(){
+    public String loginPage() {
         return "content3";
     }
 
@@ -121,19 +121,17 @@ public class NoticeController {
         Integer page = Integer.valueOf(pageString);
         Integer limit = Integer.valueOf(limitString);
         List<Notice> notices = INoticeService.seeNotice(page, limit);
-        String[] colums = { "id", "notice"};
-        String data = JsonUtil.listToLayJson(colums, notices);
-        return data;
+        String[] colums = {"id", "notice"};
+        return JsonUtil.listToLayJson(colums, notices);
     }
 
     // 查询有多少条数据
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-    public String selectCount(HttpServletRequest request){
+    public String selectCount(HttpServletRequest request) {
         int count = INoticeService.selectCount();
         String data = String.valueOf(count);
-        String json = "{\"code\":\"0000\",\"count\":" + data + "}";
-        return json;
+        return "{\"code\":\"0000\",\"count\":" + data + "}";
     }
 
 }

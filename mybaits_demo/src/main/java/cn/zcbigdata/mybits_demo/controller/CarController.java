@@ -21,31 +21,32 @@ import java.util.List;
 @RequestMapping("/car")
 public class CarController {
 
+    private static final Logger LOGGER = Logger.getLogger(CarController.class);
     @Resource
     private ICarService ICarService;
 
     @RequestMapping(value = "/back", method = RequestMethod.GET)
-    public String backPage(){
+    public String backPage() {
         return "back";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(){
+    public String loginPage() {
         return "content1";
     }
 
-    private static final Logger LOGGER = Logger.getLogger(CarController.class);
-    
     //车辆信息页面接口
     @RequestMapping("/userCarList")
-    public String userCarList(){return "userCarList";}
+    public String userCarList() {
+        return "userCarList";
+    }
 
     //添加汽车接口
-    @RequestMapping(value = "/userAddCar" , method = RequestMethod.POST)
+    @RequestMapping(value = "/userAddCar", method = RequestMethod.POST)
     @ResponseBody
-    public String UserAddCar(HttpServletRequest request){
+    public String UserAddCar(HttpServletRequest request) {
         HttpSession se = request.getSession();
-        if(!CheckUserLogin.check(se)){
+        if (!CheckUserLogin.check(se)) {
             return Strs.NO_LOGIN_RETURN_JSON;
         }
         String useridStr = (String) se.getAttribute("userid");
@@ -54,7 +55,7 @@ public class CarController {
         String capacityStr = request.getParameter("capacity");
         String production = request.getParameter("production");
         String purchase = request.getParameter("purchase");
-        if(!CheckNull.checkNull(new String[]{model,milageStr,capacityStr,production,purchase})){
+        if (!CheckNull.checkNull(new String[]{model, milageStr, capacityStr, production, purchase})) {
             return Strs.IS_NULL_RETURN_JSON;
         }
         Car car = new Car();
@@ -65,19 +66,19 @@ public class CarController {
         car.setPurchase(purchase.trim());
         car.setUserid(Integer.valueOf(useridStr.trim()));
         int flag = ICarService.userAddCar(car);
-        if(flag == 1) {
+        if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
-        }else{
+        } else {
             return Strs.FAIL_RETURN_JSON;
         }
     }
 
     //修改车辆信息接口
-    @RequestMapping(value = "/userUpdateCar" , method = RequestMethod.POST)
+    @RequestMapping(value = "/userUpdateCar", method = RequestMethod.POST)
     @ResponseBody
-    public String userUpdateCar(HttpServletRequest request){
+    public String userUpdateCar(HttpServletRequest request) {
         HttpSession se = request.getSession();
-        if(!CheckUserLogin.check(se)){
+        if (!CheckUserLogin.check(se)) {
             return Strs.NO_LOGIN_RETURN_JSON;
         }
         String idStr = request.getParameter("id");
@@ -86,7 +87,7 @@ public class CarController {
         String capacityStr = request.getParameter("capacity");
         String production = request.getParameter("production");
         String purchase = request.getParameter("purchase");
-        if(!CheckNull.checkNull(new String[]{idStr,model,milageStr,capacityStr,production,purchase})){
+        if (!CheckNull.checkNull(new String[]{idStr, model, milageStr, capacityStr, production, purchase})) {
             return Strs.IS_NULL_RETURN_JSON;
         }
         Car car = new Car();
@@ -99,55 +100,56 @@ public class CarController {
         car.setUserid(Integer.valueOf((String) se.getAttribute("userid")));
         //service层鉴权，只能修改自己的车
         int flag = ICarService.userUpdateCar(car);
-        if(flag == 1) {
+        if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
-        }else{
+        } else {
             return Strs.FAIL_RETURN_JSON;
         }
     }
 
     //删除车辆信息接口
-    @RequestMapping(value = "/userDeleteCar" , method = RequestMethod.POST)
+    @RequestMapping(value = "/userDeleteCar", method = RequestMethod.POST)
     @ResponseBody
-    public String userDeleteCar(HttpServletRequest request){
+    public String userDeleteCar(HttpServletRequest request) {
         HttpSession se = request.getSession();
-        if(!CheckUserLogin.check(se)){
+        if (!CheckUserLogin.check(se)) {
             return Strs.NO_LOGIN_RETURN_JSON;
         }
         String idStr = request.getParameter("id");
-        if(!CheckNull.checkNull(new String[]{idStr})){
+        if (!CheckNull.checkNull(new String[]{idStr})) {
             return Strs.IS_NULL_RETURN_JSON;
         }
         //service层鉴权，只能删除自己的车
         int flag = ICarService.UserDeleteCarById(Integer.valueOf(idStr.trim()), Integer.valueOf((String) se.getAttribute("userid")));
-        if(flag == 1) {
+        if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
-        }else{return Strs.FAIL_RETURN_JSON;
+        } else {
+            return Strs.FAIL_RETURN_JSON;
         }
     }
-    
+
     //查看用户车辆信息接口
-    @RequestMapping(value = "/selectUserCar" , method = RequestMethod.GET)
+    @RequestMapping(value = "/selectUserCar", method = RequestMethod.GET)
     @ResponseBody
     public String selectUserCar(HttpServletRequest request) throws Exception {
         HttpSession se = request.getSession();
-        if(!CheckUserLogin.check(se)){
+        if (!CheckUserLogin.check(se)) {
             return Strs.NO_LOGIN_RETURN_JSON;
         }
-        List<Car> cars= ICarService.selectCarListByUserid(Integer.valueOf((String) se.getAttribute("userid")));
+        List<Car> cars = ICarService.selectCarListByUserid(Integer.valueOf((String) se.getAttribute("userid")));
         return JsonUtil.listToJson(new String[]{"id", "model", "milage", "capacity", "production", "purchase", "userid"}, cars);
     }
 
     //查询用户车辆总数接口
-    @RequestMapping(value = "/selectUserCarCount" , method = RequestMethod.GET)
+    @RequestMapping(value = "/selectUserCarCount", method = RequestMethod.GET)
     @ResponseBody
     public String selectUserCarCount(HttpServletRequest request) {
         HttpSession se = request.getSession();
-        if(!CheckUserLogin.check(se)){
+        if (!CheckUserLogin.check(se)) {
             return Strs.NO_LOGIN_RETURN_JSON;
         }
         Integer count = ICarService.selectUserCarCount(Integer.valueOf((String) se.getAttribute("userid")));
-        return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"count\":\""+count+"\"}";
+        return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"count\":\"" + count + "\"}";
     }
 
     // 添加内置车辆
@@ -174,22 +176,22 @@ public class CarController {
                 return Strs.IS_NULL_RETURN_JSON;
             }
         }
-            Integer userid = Integer.valueOf(useridString);
-            Double milage = Double.valueOf(milageString);
-            Double capacity = Double.valueOf(capacityString);
-            Car car = new Car();
-            car.setUserid(userid);
-            car.setModel(model);
-            car.setMilage(milage);
-            car.setCapacity(capacity);
-            car.setProduction(production);
-            car.setPurchase(purchase);
-            int flag = ICarService.addCar(car);
-            if (flag == 1) {
-                return Strs.SUCCESS_RETURN_JSON;
-            } else {
-                return Strs.FAIL_RETURN_JSON;
-            }
+        Integer userid = Integer.valueOf(useridString);
+        Double milage = Double.valueOf(milageString);
+        Double capacity = Double.valueOf(capacityString);
+        Car car = new Car();
+        car.setUserid(userid);
+        car.setModel(model);
+        car.setMilage(milage);
+        car.setCapacity(capacity);
+        car.setProduction(production);
+        car.setPurchase(purchase);
+        int flag = ICarService.addCar(car);
+        if (flag == 1) {
+            return Strs.SUCCESS_RETURN_JSON;
+        } else {
+            return Strs.FAIL_RETURN_JSON;
+        }
     }
 
     // 修改车辆信息
@@ -218,24 +220,24 @@ public class CarController {
                 return Strs.IS_NULL_RETURN_JSON;
             }
         }
-            Integer id = Integer.valueOf(idString);
-            Integer userid = Integer.valueOf(useridString);
-            Double milage = Double.valueOf(milageString);
-            Double capacity = Double.valueOf(capacityString);
-            Car car = new Car();
-            car.setId(id);
-            car.setUserid(userid);
-            car.setModel(model);
-            car.setMilage(milage);
-            car.setCapacity(capacity);
-            car.setProduction(production);
-            car.setPurchase(purchase);
-            int flag = ICarService.updataCar(car);
-            if (flag == 1) {
-                return Strs.SUCCESS_RETURN_JSON;
-            } else {
-                return Strs.FAIL_RETURN_JSON;
-            }
+        Integer id = Integer.valueOf(idString);
+        Integer userid = Integer.valueOf(useridString);
+        Double milage = Double.valueOf(milageString);
+        Double capacity = Double.valueOf(capacityString);
+        Car car = new Car();
+        car.setId(id);
+        car.setUserid(userid);
+        car.setModel(model);
+        car.setMilage(milage);
+        car.setCapacity(capacity);
+        car.setProduction(production);
+        car.setPurchase(purchase);
+        int flag = ICarService.updataCar(car);
+        if (flag == 1) {
+            return Strs.SUCCESS_RETURN_JSON;
+        } else {
+            return Strs.FAIL_RETURN_JSON;
+        }
     }
 
     // 删除用户信息
@@ -279,19 +281,17 @@ public class CarController {
         Integer page = Integer.valueOf(pageString);
         Integer limit = Integer.valueOf(limitString);
         List<Car> cars = ICarService.seeCar(page, limit);
-        String[] colums = { "id", "model", "milage", "capacity", "production", "purchase", "userid"};
-        String data = JsonUtil.listToLayJson(colums, cars);
-        return data;
+        String[] colums = {"id", "model", "milage", "capacity", "production", "purchase", "userid"};
+        return JsonUtil.listToLayJson(colums, cars);
     }
 
     // 查询有多少条数据
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-    public String selectCount(HttpServletRequest request){
+    public String selectCount(HttpServletRequest request) {
         int count = ICarService.selectCount();
         String data = String.valueOf(count);
-        String json = "{\"code\":\"0000\",\"count\":" + data + "}";
-        return json;
+        return "{\"code\":\"0000\",\"count\":" + data + "}";
     }
 
     @ResponseBody

@@ -24,7 +24,7 @@ public class ICarServiceImpl implements ICarService {
     @Override
     public Integer userUpdateCar(Car car) {
         Car carSelected = carMapper.selectCarById(car.getId());
-        if(carSelected == null || !carSelected.getUserid().equals(car.getUserid())){
+        if (carSelected == null || !carSelected.getUserid().equals(car.getUserid())) {
             return 0;
         }
         return this.carMapper.userUpdateCar(car);
@@ -34,7 +34,7 @@ public class ICarServiceImpl implements ICarService {
     @Override
     public Integer UserDeleteCarById(Integer carid, Integer userid) {
         Car carSelected = carMapper.selectCarById(carid);
-        if(carSelected == null || !carSelected.getUserid().equals(userid)){
+        if (carSelected == null || !carSelected.getUserid().equals(userid)) {
             return 0;
         }
         return this.carMapper.userDeleteCarById(carid);
@@ -50,12 +50,12 @@ public class ICarServiceImpl implements ICarService {
     @Override
     public Integer selectUserCarCount(Integer userid) {
         return this.carMapper.selectUserCarCount(userid);
+    }
 
     @Override
     public List<Car> seeCar(int page, int limit) throws Exception {
         int pageIndex = (page - 1) * limit;
-        int pageSize = limit;
-        return this.carMapper.seeCar(pageIndex,pageSize);
+        return this.carMapper.seeCar(pageIndex, limit);
     }
 
     @Override

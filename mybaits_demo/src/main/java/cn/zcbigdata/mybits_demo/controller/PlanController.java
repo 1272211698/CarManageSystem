@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,7 +23,7 @@ public class PlanController {
     private IPlanService IPlanService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(){
+    public String loginPage() {
         return "content2";
     }
 
@@ -119,18 +120,16 @@ public class PlanController {
         Integer page = Integer.valueOf(pageString);
         Integer limit = Integer.valueOf(limitString);
         List<Plan> plans = IPlanService.seePlan(page, limit);
-        String[] colums = { "id", "plan"};
-        String data = JsonUtil.listToLayJson(colums, plans);
-        return data;
+        String[] colums = {"id", "plan"};
+        return JsonUtil.listToLayJson(colums, plans);
     }
 
     // 查询有多少条数据
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-    public String selectCount(HttpServletRequest request){
+    public String selectCount(HttpServletRequest request) {
         int count = IPlanService.selectCount();
         String data = String.valueOf(count);
-        String json = "{\"code\":\"0000\",\"count\":" + data + "}";
-        return json;
+        return "{\"code\":\"0000\",\"count\":" + data + "}";
     }
 }

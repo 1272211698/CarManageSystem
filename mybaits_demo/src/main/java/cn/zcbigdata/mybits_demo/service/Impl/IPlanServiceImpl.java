@@ -17,8 +17,7 @@ public class IPlanServiceImpl implements IPlanService {
     @Override
     public List<Plan> seePlan(int page, int limit) throws Exception {
         int pageIndex = (page - 1) * limit;
-        int pageSize = limit;
-        return this.planMapper.seePlan(pageIndex,pageSize);
+        return this.planMapper.seePlan(pageIndex, limit);
     }
 
     @Override

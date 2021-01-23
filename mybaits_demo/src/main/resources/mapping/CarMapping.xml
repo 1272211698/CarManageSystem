@@ -3,77 +3,93 @@
 <mapper namespace="cn.zcbigdata.mybits_demo.mapper.CarMapper">
 
     <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Car">
-        <result column="id" jdbcType="INTEGER" property="id" />
-        <result column="model" jdbcType="VARCHAR" property="model" />
-        <result column="milage" jdbcType="DOUBLE" property="milage" />
-        <result column="capacity" jdbcType="DOUBLE" property="capacity" />
-        <result column="production" jdbcType="VARCHAR" property="production" />
-        <result column="purchase" jdbcType="VARCHAR" property="purchase" />
-        <result column="userid" jdbcType="INTEGER" property="userid" />
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="milage" jdbcType="DOUBLE" property="milage"/>
+        <result column="capacity" jdbcType="DOUBLE" property="capacity"/>
+        <result column="production" jdbcType="VARCHAR" property="production"/>
+        <result column="purchase" jdbcType="VARCHAR" property="purchase"/>
+        <result column="userid" jdbcType="INTEGER" property="userid"/>
     </resultMap>
-        
-    <sql id="Base_Column_List" >
-   	id,model,milage,capacity,production,purchase,userid
+
+    <sql id="Base_Column_List">
+        id,model,milage,capacity,production,purchase,userid
     </sql>
 
     <!--根据userid获取车辆列表-->
     <select id="selectCarListByUserid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT * FROM car WHERE userid = #{userid};
+        SELECT *
+        FROM car
+        WHERE userid = #{userid};
     </select>
     <!--根据userid获取用户车辆总数-->
     <select id="selectUserCarCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-        SELECT COUNT(*) FROM car WHERE userid = #{userid};
+        SELECT COUNT(*)
+        FROM car
+        WHERE userid = #{userid};
     </select>
     <!--根据车辆id获取车辆信息-->
     <select id="selectCarById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT * FROM car WHERE id = #{id};
+        SELECT *
+        FROM car
+        WHERE id = #{id};
     </select>
     <!--用户前台新增车辆信息-->
     <insert id="userAddCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
-        INSERT INTO car(model, milage, capacity, production, purchase, userid) VALUES (#{model}, #{milage}, #{capacity}, #{production}, #{purchase}, #{userid});
+        INSERT INTO car(model, milage, capacity, production, purchase, userid)
+        VALUES (#{model}, #{milage}, #{capacity}, #{production}, #{purchase}, #{userid});
     </insert>
     <!--用户前台更新车辆信息-->
     <update id="userUpdateCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
-        UPDATE car SET model = #{model},milage = #{milage}, capacity = #{capacity}, production = #{production}, purchase = #{purchase} WHERE id = #{id};
+        UPDATE car
+        SET model      = #{model},
+            milage     = #{milage},
+            capacity   = #{capacity},
+            production = #{production},
+            purchase   = #{purchase}
+        WHERE id = #{id};
     </update>
     <!--用户前台删除车辆信息-->
     <delete id="userDeleteCarById" parameterType="java.lang.Integer">
-        DELETE FROM car WHERE id = #{id};
+        DELETE
+        FROM car
+        WHERE id = #{id};
     </delete>
 
 
     <select id="seeCar" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from car
         limit #{param1},#{param2};
     </select>
 
-    <delete id="deleteCar"  parameterType="java.lang.Integer">
-    delete from car
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+    <delete id="deleteCar" parameterType="java.lang.Integer">
+        delete
+        from car
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
 
-    <insert id="addCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car" >
-    insert into car (userid, model,milage,capacity,production,purchase)
-    values (#{userid,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, #{milage,jdbcType=DOUBLE}, #{capacity,jdbcType=DOUBLE}, #{production,jdbcType=VARCHAR}, #{purchase,jdbcType=VARCHAR})
-   </insert>
+    <insert id="addCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
+        insert into car (userid, model, milage, capacity, production, purchase)
+        values (#{userid,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, #{milage,jdbcType=DOUBLE},
+                #{capacity,jdbcType=DOUBLE}, #{production,jdbcType=VARCHAR}, #{purchase,jdbcType=VARCHAR})
+    </insert>
 
-    <update id="updataCar"  parameterType="cn.zcbigdata.mybits_demo.entity.Car" >
-    update car
-    set userid = #{userid,jdbcType=INTEGER},
-      model = #{model,jdbcType=VARCHAR},
-      milage = #{milage,jdbcType=DOUBLE},
-      capacity = #{capacity,jdbcType=DOUBLE},
-      production = #{production,jdbcType=VARCHAR},
-      purchase = #{purchase,jdbcType=VARCHAR}
-      where id = #{id,jdbcType=INTEGER}
-  </update>
+    <update id="updataCar" parameterType="cn.zcbigdata.mybits_demo.entity.Car">
+        update car
+        set userid     = #{userid,jdbcType=INTEGER},
+            model      = #{model,jdbcType=VARCHAR},
+            milage     = #{milage,jdbcType=DOUBLE},
+            capacity   = #{capacity,jdbcType=DOUBLE},
+            production = #{production,jdbcType=VARCHAR},
+            purchase   = #{purchase,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
     <select id="selectCount" resultType="java.lang.Integer">
-    select
-    count(*)
-    from car
-  </select>
+        select count(*)
+        from car
+    </select>
 
 </mapper>

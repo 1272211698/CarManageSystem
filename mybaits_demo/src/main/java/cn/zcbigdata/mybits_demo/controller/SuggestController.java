@@ -24,7 +24,7 @@ public class SuggestController {
     private ISuggestService ISuggestService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(){
+    public String loginPage() {
         return "content4";
     }
 
@@ -93,18 +93,16 @@ public class SuggestController {
         Integer page = Integer.valueOf(pageString);
         Integer limit = Integer.valueOf(limitString);
         List<Suggest> suggests = ISuggestService.seeSuggest(page, limit);
-        String[] colums = { "id", "suggest"};
-        String data = JsonUtil.listToLayJson(colums, suggests);
-        return data;
+        String[] colums = {"id", "suggest"};
+        return JsonUtil.listToLayJson(colums, suggests);
     }
 
     // 查询有多少条数据
     @ResponseBody
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-    public String selectCount(HttpServletRequest request){
+    public String selectCount(HttpServletRequest request) {
         int count = ISuggestService.selectCount();
         String data = String.valueOf(count);
-        String json = "{\"code\":\"0000\",\"count\":" + data + "}";
-        return json;
+        return "{\"code\":\"0000\",\"count\":" + data + "}";
     }
 }

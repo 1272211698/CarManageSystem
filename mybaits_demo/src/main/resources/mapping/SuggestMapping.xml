@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.zcbigdata.mybits_demo.mapper.SuggestMapper" >
-    <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Suggest" >
-        <id      column="id"        property="id"        jdbcType="INTEGER" />
-        <result  column="suggest"  property="suggest"  jdbcType="VARCHAR" />
+<mapper namespace="cn.zcbigdata.mybits_demo.mapper.SuggestMapper">
+    <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Suggest">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="suggest" property="suggest" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <sql id="Base_Column_List" >
-   	id,suggest
+    <sql id="Base_Column_List">
+        id,suggest
     </sql>
 
-    <insert id="addSuggest" parameterType="cn.zcbigdata.mybits_demo.entity.Suggest" >
-    insert into suggest (suggest)
-    values (#{suggest,jdbcType=VARCHAR})
-   </insert>
+    <insert id="addSuggest" parameterType="cn.zcbigdata.mybits_demo.entity.Suggest">
+        insert into suggest (suggest)
+        values (#{suggest,jdbcType=VARCHAR})
+    </insert>
 
-    <delete id="deleteSuggest"  parameterType="java.lang.Integer">
-        delete from suggest
+    <delete id="deleteSuggest" parameterType="java.lang.Integer">
+        delete
+        from suggest
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
     <select id="seeSuggest" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from suggest
         limit #{param1},#{param2};
     </select>
 
     <select id="selectCount" resultType="java.lang.Integer">
-        select
-        count(*)
+        select count(*)
         from suggest
     </select>
 

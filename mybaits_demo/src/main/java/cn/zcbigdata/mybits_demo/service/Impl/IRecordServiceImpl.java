@@ -19,9 +19,9 @@ public class IRecordServiceImpl implements IRecordService {
     @Override
     public List<Record> selectRecordByCarid(Integer carid, Integer userid) {
         Integer useridSelected = this.recordMapper.selectUseridByCarId(carid);
-        if(!useridSelected.equals(userid)) {
+        if (!useridSelected.equals(userid)) {
             return null;
-        }else{
+        } else {
             return this.recordMapper.selectRecordByCarid(carid);
         }
     }
@@ -30,9 +30,9 @@ public class IRecordServiceImpl implements IRecordService {
     @Override
     public Integer userAddRecord(Record record, Integer userid) {
         Integer useridSelected = this.recordMapper.selectUseridByCarId(record.getCarid());
-        if(!useridSelected.equals(userid)) {
+        if (!useridSelected.equals(userid)) {
             return 0;
-        }else{
+        } else {
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dataStr = simpleDateFormat.format(date);
@@ -46,13 +46,13 @@ public class IRecordServiceImpl implements IRecordService {
     @Override
     public Integer userUpdateRecord(Record record, Integer userid) {
         Record recordSelected = this.recordMapper.selectRecordById(record.getId());
-        if(recordSelected == null){
+        if (recordSelected == null) {
             return 0;
         }
         Integer useridSelected = this.recordMapper.selectUseridByCarId(recordSelected.getCarid());
-        if(!useridSelected.equals(userid)) {
+        if (!useridSelected.equals(userid)) {
             return 0;
-        }else{
+        } else {
             return this.recordMapper.userUpdateRecord(record);
         }
     }
@@ -61,13 +61,13 @@ public class IRecordServiceImpl implements IRecordService {
     @Override
     public Integer userDeleteRecordById(Integer id, Integer userid) {
         Record recordSelected = this.recordMapper.selectRecordById(id);
-        if(recordSelected == null){
+        if (recordSelected == null) {
             return 0;
         }
         Integer useridSelected = this.recordMapper.selectUseridByCarId(recordSelected.getCarid());
-        if(!useridSelected.equals(userid)) {
+        if (!useridSelected.equals(userid)) {
             return 0;
-        }else {
+        } else {
             return this.recordMapper.userDeleteRecordById(id);
         }
     }

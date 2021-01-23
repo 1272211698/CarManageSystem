@@ -18,8 +18,7 @@ public class INoticeServiceImpl implements INoticeService {
     @Override
     public List<Notice> seeNotice(int page, int limit) throws Exception {
         int pageIndex = (page - 1) * limit;
-        int pageSize = limit;
-        return this.noticeMapper.seeNotice(pageIndex,pageSize);
+        return this.noticeMapper.seeNotice(pageIndex, limit);
     }
 
     @Override

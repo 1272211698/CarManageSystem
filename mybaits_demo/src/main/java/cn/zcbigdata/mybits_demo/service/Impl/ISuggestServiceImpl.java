@@ -4,6 +4,7 @@ import cn.zcbigdata.mybits_demo.entity.Suggest;
 import cn.zcbigdata.mybits_demo.mapper.SuggestMapper;
 import cn.zcbigdata.mybits_demo.service.ISuggestService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -26,8 +27,7 @@ public class ISuggestServiceImpl implements ISuggestService {
     @Override
     public List<Suggest> seeSuggest(int page, int limit) throws Exception {
         int pageIndex = (page - 1) * limit;
-        int pageSize = limit;
-        return this.suggestMapper.seeSuggest(pageIndex,pageSize);
+        return this.suggestMapper.seeSuggest(pageIndex, limit);
     }
 
     @Override

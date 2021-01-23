@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.zcbigdata.mybits_demo.mapper.PlanMapper" >
-    <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Plan" >
-        <id      column="id"        property="id"        jdbcType="INTEGER" />
-        <result  column="plan"  property="plan"  jdbcType="VARCHAR" />
+<mapper namespace="cn.zcbigdata.mybits_demo.mapper.PlanMapper">
+    <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Plan">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="plan" property="plan" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <sql id="Base_Column_List" >
-   	id,plan
+    <sql id="Base_Column_List">
+        id,plan
     </sql>
 
     <select id="seePlan" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from plan
         limit #{param1},#{param2};
     </select>
 
-    <delete id="deletePlan"  parameterType="java.lang.Integer">
-        delete from plan
+    <delete id="deletePlan" parameterType="java.lang.Integer">
+        delete
+        from plan
         where id = #{id,jdbcType=INTEGER}
-  </delete>
+    </delete>
 
-    <insert id="addPlan" parameterType="cn.zcbigdata.mybits_demo.entity.Plan" >
+    <insert id="addPlan" parameterType="cn.zcbigdata.mybits_demo.entity.Plan">
         insert into plan (plan)
         values (#{plan,jdbcType=VARCHAR})
-   </insert>
+    </insert>
 
-    <update id="updataPlan"  parameterType="cn.zcbigdata.mybits_demo.entity.Plan" >
+    <update id="updataPlan" parameterType="cn.zcbigdata.mybits_demo.entity.Plan">
         update plan
         set plan = #{plan,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
-  </update>
+    </update>
 
     <select id="selectCount" resultType="java.lang.Integer">
-        select
-        count(*)
+        select count(*)
         from plan
-  </select>
+    </select>
 
 </mapper>
