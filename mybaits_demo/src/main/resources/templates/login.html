@@ -15,7 +15,7 @@
 
 <body style="background-image: url(../static/images/loginbackground.jpg);">
     <div
-        style="border-radius: 20px; width: 500px; height: 300px; background:rgba(100,149,237,0.8); margin: auto; float: left; top: 0; left: 0; right: 0; bottom: 0; position: absolute; padding: 30px">
+        style="border-radius: 20px; width: 500px; height: 300px; background:rgba(65,104,89,0.8); margin: auto; float: left; top: 0; left: 0; right: 0; bottom: 0; position: absolute; padding: 30px">
         <div style="width: 100%; height: 50px; text-align: center; font-size: 30px; line-height: 50px;">欢迎登录</div>
         <div style="width: 80px; height: 50px; margin-top: 10px; float: left; text-align: center; font-size: 18px; line-height: 50px;">用户名：</div>
         <div style="width: 420px; height: 50px; margin-top: 10px; float: left; text-align: center; font-size: 18px; line-height: 50px;">
@@ -27,7 +27,7 @@
         </div>
         <button type="button" class="layui-btn layui-btn-lg layui-btn-normal"
             style="width: 100px; margin-left: 100px; margin-top: 40px;" onclick="loginSubmit()">登录</button>
-        <button type="button" class="layui-btn layui-btn-lg layui-btn-normal"
+        <button type="button" class="layui-btn layui-btn-lg layui-btn-warm"
             style="width: 100px; margin-left: 100px; margin-top: 40px;" onclick="goSignUp()">注册</button>
         <!-- <div style="background-color: blue; width: 400px; height: 70px; margin-top: 22.5px; margin-left: 50px;">
         
@@ -70,9 +70,12 @@
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert(typeof (errorThrown));
+                layer.msg("网络错误！");
             }
         });
+    }
+    function goSignUp(){
+        window.location.href = 'http://localhost:8080/user/signUp'
     }
 </script>
 
