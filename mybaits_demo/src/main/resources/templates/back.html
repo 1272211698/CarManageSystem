@@ -82,6 +82,29 @@
 <script src="../static/layui/layui.js"></script>
 <script>
 
+  checklogin();
+  function checklogin() {
+    var url = "http://localhost:8080/user/checkUserLogin";
+    $.ajax({
+      type : "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+      url : url, //传输地址的URL
+      data : {}, //data代表我们的数据  key -value类型的数据
+      dataType : 'JSON',
+      async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+      success : function(res) {
+        if (res.code == "7777") {
+          alert("请重新登陆");
+          window.location.href = "http://localhost:8080/user/login";
+        }
+      },
+      error : function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("请重新登陆");
+        window.location.href = "http://localhost:8080/user/login";
+
+      }
+    });
+  }
+
   function logout() {
     var url = "http://localhost:8080/car/logout";
     $.ajax({

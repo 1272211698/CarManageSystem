@@ -1,6 +1,7 @@
 package cn.zcbigdata.mybits_demo.controller;
 
 import cn.zcbigdata.mybits_demo.Util.CheckNull;
+import cn.zcbigdata.mybits_demo.Util.CheckUserLogin;
 import cn.zcbigdata.mybits_demo.Util.Strs;
 import cn.zcbigdata.mybits_demo.entity.User;
 import cn.zcbigdata.mybits_demo.service.IUserService;
@@ -82,4 +83,14 @@ public class UserController {
         return Strs.SUCCESS_RETURN_JSON;
     }
 
+    //登录检查接口
+    @RequestMapping(value = "/checkUserLogin", method = RequestMethod.GET)
+    @ResponseBody
+    public String checkUserLogin(HttpServletRequest request) {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
+        return Strs.SUCCESS_RETURN_JSON;
+    }
 }
