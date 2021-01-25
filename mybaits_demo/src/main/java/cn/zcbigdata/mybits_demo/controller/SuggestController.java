@@ -31,6 +31,9 @@ public class SuggestController {
         return "content4";
     }
 
+    @RequestMapping(value = "/suggestPage", method = RequestMethod.GET)
+    public String suggestPage(){return "suggest";}
+
     // 添加留言
     @ResponseBody
     @RequestMapping(value = "/addSuggest", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")

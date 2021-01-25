@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>登录页面</title>
+    <title>用户主页</title>
     <meta content="webkit" name="renderer">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
@@ -28,6 +28,7 @@
     </div>
     <!--展示区域-->
     <button class="layui-btn" id="addCar" type="button">添加汽车</button>
+    <button class="layui-btn layui-btn-normal" id="showSuggest" type="button">留言相关</button>
     <div id="carList" style="width: 100%; height: auto;"></div>
 </div>
 <!--添加用表单-->
@@ -168,6 +169,17 @@
                 /^(0|[1-9]\d*)(\.\d*)?$/
                 , '请填写一个非负浮点数'
             ]
+        });
+        $("#showSuggest").click(function () {
+            layer.open({
+                type: 2,
+                title: '留言页',
+                shadeClose: true,
+                maxmin: true, //开启最大化最小化按钮
+                shade: 0.8,
+                area: ['1000px', '500px'],
+                content: 'http://localhost:8080/suggest/suggestPage' //iframe的url
+            });
         });
         $("#addCar").click(function () {
             layui.form.val('addForm', {
