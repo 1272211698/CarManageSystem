@@ -4,6 +4,7 @@ public class Suggest {
     private int id;
     private String suggest;
     private String reply;
+    private int userid;
 
     public int getId() {
         return id;
@@ -29,12 +30,21 @@ public class Suggest {
         this.reply = reply;
     }
 
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
     @Override
     public String toString() {
         return "Suggest{" +
                 "id=" + id +
                 ", suggest='" + suggest + '\'' +
                 ", reply='" + reply + '\'' +
+                ", userid=" + userid +
                 '}';
     }
 }

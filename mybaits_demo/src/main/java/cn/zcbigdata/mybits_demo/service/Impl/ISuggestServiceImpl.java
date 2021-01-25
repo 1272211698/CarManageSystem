@@ -15,6 +15,11 @@ public class ISuggestServiceImpl implements ISuggestService {
     SuggestMapper suggestMapper;
 
     @Override
+    public List<Suggest> selectUserSuggest(Integer userid) {
+        return this.suggestMapper.selectUserSuggest(userid);
+    }
+
+    @Override
     public int addSuggest(Suggest suggest) {
         return this.suggestMapper.addSuggest(suggest);
     }

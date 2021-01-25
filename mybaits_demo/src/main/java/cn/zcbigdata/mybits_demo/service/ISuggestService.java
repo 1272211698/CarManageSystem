@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface ISuggestService {
 
+    List<Suggest> selectUserSuggest(Integer userid);
+
+
     int addSuggest(Suggest suggest);
 
     int updataReply(Suggest suggest);

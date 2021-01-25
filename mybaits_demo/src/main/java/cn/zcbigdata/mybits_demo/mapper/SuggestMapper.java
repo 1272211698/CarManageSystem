@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface SuggestMapper {
 
+    List<Suggest> selectUserSuggest(Integer userid);
+
     int addSuggest(Suggest suggest);
 
     int updataReply(Suggest suggest);

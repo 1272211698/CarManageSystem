@@ -64,7 +64,7 @@
             async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
             success: function (data)//success、error代表是否返回成功
             {
-                layer.msg(data.msg);
+                layer.msg("您输入的用户名或密码不正确！");
                 if (data.code == "0000") {
                     if (data.data.admin == 1) {
                         window.location.href = 'http://localhost:8080/car/back'

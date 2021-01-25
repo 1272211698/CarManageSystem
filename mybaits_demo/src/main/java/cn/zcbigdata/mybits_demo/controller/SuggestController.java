@@ -49,12 +49,25 @@ public class SuggestController {
         }
         Suggest suggests = new Suggest();
         suggests.setSuggest(suggest);
+        suggests.setUserid(Integer.valueOf((String) se.getAttribute("userid")));
         int flag = ISuggestService.addSuggest(suggests);
         if (flag == 1) {
             return Strs.SUCCESS_RETURN_JSON;
         } else {
             return Strs.FAIL_RETURN_JSON;
         }
+    }
+
+    //查看用户车辆信息接口
+    @RequestMapping(value = "/selectUserSuggest", method = RequestMethod.GET)
+    @ResponseBody
+    public String selectUserSuggest(HttpServletRequest request) throws Exception {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
+        List<Suggest> suggests = ISuggestService.selectUserSuggest(Integer.valueOf((String) se.getAttribute("userid")));
+        return JsonUtil.listToJson(new String[]{"id", "suggest","reply","userid"}, suggests);
     }
 
     @RequestMapping(value = "/updataReply", method = RequestMethod.GET)
@@ -116,7 +129,7 @@ public class SuggestController {
             return Strs.IS_NULL_RETURN_JSON;
         }
         List<Suggest> suggests = ISuggestService.seeSuggest(Integer.valueOf(pageString), Integer.valueOf(limitString));
-        String[] colums = {"id", "suggest","reply"};
+        String[] colums = {"id","suggest","reply","userid"};
         return JsonUtil.listToLayJson(colums, suggests);
     }
 

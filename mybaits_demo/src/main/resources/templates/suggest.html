@@ -80,20 +80,21 @@
     });
     getsuggest();
     function getsuggest() {
-        var url = "http://localhost:8080/suggest/seeSuggest";
+        var url = "http://localhost:8080/suggest/selectUserSuggest";
         $.ajax({
             type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
             url: url,    //传输地址的URL
-            data: {"page": '1', 'limit': '10000'}, //data代表我们的数据  key -value类型的数据
+            data: {}, //data代表我们的数据  key -value类型的数据
             dataType: 'JSON',
             async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
             success: function (data)//success、error代表是否返回成功
             {
+                console.log(data);
                 if (data.code == "7777") {
                     layer.closeAll();
                     window.location.href = 'http://localhost:8080/user/login'
                 } else {
-                    var item = data[3].rows.item;
+                    var item = data.data;
                     if(item.length == 0){
                         $("#notices").html("没有留言");
                         return;

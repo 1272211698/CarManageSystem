@@ -5,15 +5,23 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="suggest" property="suggest" jdbcType="VARCHAR"/>
         <result column="reply" property="reply" jdbcType="VARCHAR"/>
+        <result column="userid" property="userid" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,suggest,reply
+        id,suggest,reply,userid
     </sql>
 
+    <!--根据userid获取留言列表-->
+    <select id="selectUserSuggest" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT *
+        FROM suggest
+        WHERE userid = #{userid};
+    </select>
+
     <insert id="addSuggest" parameterType="cn.zcbigdata.mybits_demo.entity.Suggest">
-        insert into suggest (suggest)
-        values (#{suggest,jdbcType=VARCHAR})
+        insert into suggest (suggest,userid)
+        values (#{suggest,jdbcType=VARCHAR},#{userid,jdbcType=INTEGER})
     </insert>
 
     <update id="updataReply" parameterType="cn.zcbigdata.mybits_demo.entity.Suggest">

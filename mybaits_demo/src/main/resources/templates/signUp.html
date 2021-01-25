@@ -35,7 +35,7 @@
             style="width: 100px; margin-left: 100px; margin-top: 40px;" type="button">注册
     </button>
     <button class="layui-btn layui-btn-lg layui-btn-danger" onclick="goSignin()"
-            style="width: 100px; margin-left: 100px; margin-top: 40px;" type="button">取消
+            style="width: 100px; margin-left: 100px; margin-top: 40px;" type="button">返回
     </button>
 </div>
 </body>
@@ -69,7 +69,7 @@
                     layer.msg("注册成功，即将跳转到登录页面");
                     setTimeout("goSignin()",2000)
                 }else{
-                    layer.msg(data.msg);
+                    layer.msg("该用户名已被使用!");
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
