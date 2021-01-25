@@ -3,118 +3,118 @@
 <head>
     <meta charset="utf-8">
     <title>Layui</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="../static/layui/css/layui.css" media="all" rel="stylesheet">
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
 
 <!-- 添加的from表单 -->
-<form class="layui-form" action="" id="addForm" style="display:none" lay-filter="add" enctype="multipart/form-data">
+<form action="" class="layui-form" enctype="multipart/form-data" id="addForm" lay-filter="add" style="display:none">
 
     <div class="layui-form-item">
         <label class="layui-form-label">型号</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="model" name="model" lay-verify="description" autocomplete="off"
-                   placeholder="型号" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="model" lay-verify="description" name="model" placeholder="型号"
+                   style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">里程数</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="milage" name="milage" lay-verify="description" autocomplete="off"
-                   placeholder="里程数" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="milage" lay-verify="description" name="milage" placeholder="里程数"
+                   style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">排量</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="capacity" name="capacity" lay-verify="description"
-                   autocomplete="off" placeholder="排量" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="capacity" lay-verify="description" name="capacity"
+                   placeholder="排量" style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">生产日期</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="production" name="production" lay-verify="description"
-                   autocomplete="off" placeholder="生产日期" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="production" lay-verify="description" name="production"
+                   placeholder="生产日期" style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">购买日期</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="purchase" name="purchase" lay-verify="description"
-                   autocomplete="off" placeholder="购买日期" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="purchase" lay-verify="description" name="purchase"
+                   placeholder="购买日期" style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item" id="sub">
-        <button style="margin-left:220px" class="layui-btn" type="button" lay-submit lay-filter="demo2" id="addsub">提交
+        <button class="layui-btn" id="addsub" lay-filter="demo2" lay-submit style="margin-left:220px" type="button">提交
         </button>
     </div>
 </form>
 
 <!--修改的from表单 -->
-<form class="layui-form" action="" id="updataForm" style="display:none" lay-filter="updata"
-      enctype="multipart/form-data">
+<form action="" class="layui-form" enctype="multipart/form-data" id="updataForm" lay-filter="updata"
+      style="display:none">
 
     <div class="layui-form-item" style="display:none">
         <label class="layui-form-label">ID</label>
         <div class="layui-input-block">
-            <input type="text" id="id" name="id" lay-verify="id" autocomplete="off" placeholder="ID"
-                   class="layui-input">
+            <input autocomplete="off" class="layui-input" id="id" lay-verify="id" name="id" placeholder="ID"
+                   type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">型号</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="model" name="model" lay-verify="model" autocomplete="off"
-                   placeholder="型号" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="model" lay-verify="model" name="model" placeholder="型号"
+                   style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">里程数</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="milage" name="milage" lay-verify="milage" autocomplete="off"
-                   placeholder="里程数" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="milage" lay-verify="milage" name="milage" placeholder="里程数"
+                   style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">排量</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="capacity" name="capacity" lay-verify="capacity"
-                   autocomplete="off" placeholder="排量" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="capacity" lay-verify="capacity" name="capacity"
+                   placeholder="排量" style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">生产日期</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="production" name="production" lay-verify="production"
-                   autocomplete="off" placeholder="生产日期" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="production" lay-verify="production" name="production"
+                   placeholder="生产日期" style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">购买日期</label>
         <div class="layui-input-block">
-            <input type="text" style="width:340px" id="purchase" name="purchase" lay-verify="purchase"
-                   autocomplete="off" placeholder="购买日期" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="purchase" lay-verify="purchase" name="purchase"
+                   placeholder="购买日期" style="width:340px" type="text">
         </div>
     </div>
 
     <div class="layui-form-item" id="sub">
-        <button style="margin-left:220px" class="layui-btn" type="button" lay-submit lay-filter="demo3" id="updatasub">
+        <button class="layui-btn" id="updatasub" lay-filter="demo3" lay-submit style="margin-left:220px" type="button">
             提交
         </button>
     </div>
@@ -123,7 +123,7 @@
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
 
-<script type="text/html" id="toolbarDemo">
+<script id="toolbarDemo" type="text/html">
     <div class="layui-btn-container">
         <button type="button" class="layui-btn layui-btn-sm" id="add" lay-event="add">添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -132,13 +132,13 @@
     </div>
 </script>
 
-<script type="text/html" id="barDemo">
+<script id="barDemo" type="text/html">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 
-<script src="../static/layui/layui.js" charset="utf-8"></script>
+<script charset="utf-8" src="../static/layui/layui.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
@@ -269,9 +269,9 @@
                             } else if (res.code == "7777") {
                                 layer.msg("账号已过期，请重新登陆");
                             } else {
-                                if(res.msg == "缺少参数"){
+                                if (res.msg == "缺少参数") {
                                     layer.msg("不可修改为空信息");
-                                }else{
+                                } else {
                                     layer.msg("管理员不可修改用户的车辆信息");
                                 }
                             }
@@ -347,7 +347,7 @@
                     layer.alert('这是工具栏右侧自定义的一个图标按钮');
                     break;
             }
-            ;
+
         });
 
 
@@ -393,13 +393,13 @@
                 success: function (res) {
                     if (res.code == "7777") {
                         layer.msg("账号已过期，请重新登陆");
-                    } else if(res.code == "0000"){
+                    } else if (res.code == "0000") {
                         layer.msg("删除成功");
                         //刷新页面
                         table.reload('test', {
                             url: 'http://localhost:8080/car/selectAll'
                         });
-                    }else{
+                    } else {
                         layer.msg("管理员不可删除用户的车辆信息");
                         //刷新页面
                         table.reload('test', {

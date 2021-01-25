@@ -3,89 +3,89 @@
 <head>
     <meta charset="utf-8">
     <title>全部公告</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../../static/layui/css/layui.css" media="all">
-    <script src="../../static/layui/layui.js" charset="utf-8"></script>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="../../static/layui/css/layui.css" media="all" rel="stylesheet">
+    <script charset="utf-8" src="../../static/layui/layui.js"></script>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 
 <body style="padding: 20px">
 <!--添加用的表单-->
-<div style=" display: none; width: auto; height: auto; padding: 20px" id="addFormDiv">
-<form class="layui-form" action="" lay-filter="addForm" style="" id="addForm">
-    <div class="layui-form-item" style="display: none">
-        <label class="layui-form-label">车辆id</label>
-        <div class="layui-input-block">
-            <input type="text" name="carid" placeholder="carid" class="layui-input">
+<div id="addFormDiv" style=" display: none; width: auto; height: auto; padding: 20px">
+    <form action="" class="layui-form" id="addForm" lay-filter="addForm" style="">
+        <div class="layui-form-item" style="display: none">
+            <label class="layui-form-label">车辆id</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="carid" placeholder="carid" type="text">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">保养记录内容</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" name="plan"></textarea>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">保养记录内容</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="plan" placeholder="请输入内容"></textarea>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="addSubmit">立即提交</button>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-filter="addSubmit" lay-submit="" type="submit">立即提交</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 </div>
 <!--修改用的表单-->
-<div style="display: none; width: auto; height: auto; padding: 20px" id="editFormDiv">
-<form class="layui-form" action="" lay-filter="editForm"  id="editForm">
-    <div class="layui-form-item" style="display: none">
-        <label class="layui-form-label">记录</label>
-        <div class="layui-input-block">
-            <input type="text" name="id" placeholder="id" class="layui-input">
+<div id="editFormDiv" style="display: none; width: auto; height: auto; padding: 20px">
+    <form action="" class="layui-form" id="editForm" lay-filter="editForm">
+        <div class="layui-form-item" style="display: none">
+            <label class="layui-form-label">记录</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="id" placeholder="id" type="text">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">保养记录内容</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" name="plan"></textarea>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">保养记录内容</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="plan" placeholder="请输入内容"></textarea>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="editSubmit">立即提交</button>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-filter="editSubmit" lay-submit="" type="submit">立即提交</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 </div>
-<button type="button" class="layui-btn" id="addRecord">添加保养记录</button>
-<div style="width: 1000px; height: auto; text-align: left; font-size: 20px" id="records"></div>
+<button class="layui-btn" id="addRecord" type="button">添加保养记录</button>
+<div id="records" style="width: 1000px; height: auto; text-align: left; font-size: 20px"></div>
 
 </body>
 <script>
-    layui.use(['layer','form'], function () {
+    layui.use(['layer', 'form'], function () {
         var form = layui.form
             , layer = layui.layer;
 
         var tabIndex;
 
-        $("#addRecord").click(function (){
-                layui.form.val('addForm', {
-                    "carid":getCookie("carid")
-                });
-                tabIndex = layer.open({
-                    type: 1,
-                    shade: false,
-                    title: false, //不显示标题
-                    content: $('#addFormDiv'),//捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    cancel: function(){
-                        layer.close(tabIndex);
-                        $('#addForm')[0].reset();
-                    }
-                });
+        $("#addRecord").click(function () {
+            layui.form.val('addForm', {
+                "carid": getCookie("carid")
             });
+            tabIndex = layer.open({
+                type: 1,
+                shade: false,
+                title: false, //不显示标题
+                content: $('#addFormDiv'),//捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                cancel: function () {
+                    layer.close(tabIndex);
+                    $('#addForm')[0].reset();
+                }
+            });
+        });
 
         //添加表单提交事件
-        form.on('submit(addSubmit)', function(data){
+        form.on('submit(addSubmit)', function (data) {
             layer.close(tabIndex);
             $('#addForm')[0].reset();
             var url = "http://localhost:8080/record/userAddRecord";
@@ -99,7 +99,7 @@
                 {
                     console.log(data);
                     if (data.code == "7777") {
-                        layer.msg("请登录！！",function () {
+                        layer.msg("请登录！！", function () {
                         });
                     } else {
                         layer.msg(data.msg);
@@ -112,7 +112,7 @@
         });
 
         //修改表单提交事件
-        form.on('submit(editSubmit)', function(data){
+        form.on('submit(editSubmit)', function (data) {
             layer.close(layer.index);
             $('#editForm')[0].reset();
             var url = "http://localhost:8080/record/userUpdateRecord";
@@ -126,7 +126,7 @@
                 {
                     console.log(data);
                     if (data.code == "7777") {
-                        layer.msg("请登录！！",function () {
+                        layer.msg("请登录！！", function () {
                         });
                     } else {
                         layer.msg(data.msg);
@@ -140,12 +140,13 @@
     });
     //获取记录列表
     getRecord();
+
     function getRecord() {
         var url = "http://localhost:8080/record/selectRecordByCarid";
         $.ajax({
             type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
             url: url,    //传输地址的URL
-            data: {"carid":getCookie("carid")}, //data代表我们的数据  key -value类型的数据
+            data: {"carid": getCookie("carid")}, //data代表我们的数据  key -value类型的数据
             dataType: 'JSON',
             async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
             success: function (data)//success、error代表是否返回成功
@@ -154,17 +155,17 @@
                 if (data.code == "7777") {
                     layer.alert("请登录！");
                 } else {
-                    if(data.data.length == 0){
+                    if (data.data.length == 0) {
                         $("#records").html("没有保养记录");
                         return;
                     }
                     var html = '';
-                    for(var i = 0; i < data.data.length; i++){
+                    for (var i = 0; i < data.data.length; i++) {
                         html += '<div style="width: 960px; height: 2px; margin-top: 10px; background: #0C0C0C"></div>';
-                        html += '<div style= "width: 100%; height: auto; margin-top: 10px">['+data.data[i].recordTime+']</div>';
-                        html += '<div style= "width: 100%; height: auto; margin-top: 10px">'+data.data[i].plan+'</div>';
-                        html += '<button type="button" class="layui-btn layui-btn-sm layui-btn-warm" onclick="editRecord('+data.data[i].id+')">修改保养记录</button>';
-                        html += '<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="deleteRecord('+data.data[i].id+')">删除保养记录</button>'
+                        html += '<div style= "width: 100%; height: auto; margin-top: 10px">[' + data.data[i].recordTime + ']</div>';
+                        html += '<div style= "width: 100%; height: auto; margin-top: 10px">' + data.data[i].plan + '</div>';
+                        html += '<button type="button" class="layui-btn layui-btn-sm layui-btn-warm" onclick="editRecord(' + data.data[i].id + ')">修改保养记录</button>';
+                        html += '<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="deleteRecord(' + data.data[i].id + ')">删除保养记录</button>'
                     }
                     $("#records").html(html);
                 }
@@ -176,48 +177,46 @@
     }
 
 
-    function getCookie(cname)
-    {
+    function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
-        for(var i=0; i<ca.length; i++)
-        {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i].trim();
-            if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
         }
         return "";
     }
 
     //打开修改表单
-    function editRecord(id){
+    function editRecord(id) {
         layui.form.val('editForm', {
-            "id":id
+            "id": id
         });
         layer.open({
             type: 1,
             shade: false,
             title: false, //不显示标题
             content: $('#editFormDiv'),//捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-            cancel: function(){
+            cancel: function () {
                 layer.close(layer.index);
                 $('#addForm')[0].reset();
             }
         });
     }
 
-    function deleteRecord(id){
+    function deleteRecord(id) {
         var url = "http://localhost:8080/record/userDeleteRecord";
         $.ajax({
             type: "POST", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
             url: url,    //传输地址的URL
-            data: {"id":id}, //data代表我们的数据  key -value类型的数据
+            data: {"id": id}, //data代表我们的数据  key -value类型的数据
             dataType: 'JSON',
             async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
             success: function (data)//success、error代表是否返回成功
             {
                 console.log(data);
                 if (data.code == "7777") {
-                    layer.msg("请登录！！",function () {
+                    layer.msg("请登录！！", function () {
                     });
                 } else {
                     layer.msg(data.msg);
