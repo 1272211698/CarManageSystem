@@ -54,6 +54,30 @@ public class SuggestController {
         }
     }
 
+    @RequestMapping(value = "/updataReply", method = RequestMethod.GET)
+    @ResponseBody
+    public String updataReply(HttpServletRequest request) {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
+        String idStr = request.getParameter("id");
+        String reply = request.getParameter("reply");
+        if (!CheckNull.checkNull(new String[]{idStr, reply})) {
+            return Strs.IS_NULL_RETURN_JSON;
+        }
+        Suggest suggest = new Suggest();
+        suggest.setId(Integer.valueOf(idStr.trim()));
+        suggest.setReply(reply);
+        //service层鉴权，只能修改自己的车
+        int flag = ISuggestService.updataReply(suggest);
+        if (flag == 1) {
+            return Strs.SUCCESS_RETURN_JSON;
+        } else {
+            return Strs.FAIL_RETURN_JSON;
+        }
+    }
+
     // 删除用户信息
     @ResponseBody
     @RequestMapping(value = "/deleteSuggest", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
@@ -89,7 +113,7 @@ public class SuggestController {
             return Strs.IS_NULL_RETURN_JSON;
         }
         List<Suggest> suggests = ISuggestService.seeSuggest(Integer.valueOf(pageString), Integer.valueOf(limitString));
-        String[] colums = {"id", "suggest"};
+        String[] colums = {"id", "suggest","reply"};
         return JsonUtil.listToLayJson(colums, suggests);
     }
 

@@ -8,6 +8,8 @@ public interface ISuggestService {
 
     int addSuggest(Suggest suggest);
 
+    int updataReply(Suggest suggest);
+
     int deleteSuggest(int id);
 
     List<Suggest> seeSuggest(int page, int limit) throws Exception;

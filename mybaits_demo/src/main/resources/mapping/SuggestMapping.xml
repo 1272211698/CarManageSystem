@@ -4,16 +4,23 @@
     <resultMap id="BaseResultMap" type="cn.zcbigdata.mybits_demo.entity.Suggest">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="suggest" property="suggest" jdbcType="VARCHAR"/>
+        <result column="reply" property="reply" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,suggest
+        id,suggest,reply
     </sql>
 
     <insert id="addSuggest" parameterType="cn.zcbigdata.mybits_demo.entity.Suggest">
         insert into suggest (suggest)
         values (#{suggest,jdbcType=VARCHAR})
     </insert>
+
+    <update id="updataReply" parameterType="cn.zcbigdata.mybits_demo.entity.Suggest">
+        UPDATE suggest
+        SET reply = #{reply}
+        WHERE id = #{id};
+    </update>
 
     <delete id="deleteSuggest" parameterType="java.lang.Integer">
         delete
