@@ -46,9 +46,10 @@ public class UserController {
         HttpSession se = request.getSession();
         se.setAttribute("userid", user.getId().toString());
         se.setAttribute("admin", user.getAdmin().toString());
-        if(user.getAdmin().equals(1)){
+        se.setAttribute("userName", user.getUserName());
+        if (user.getAdmin().equals(1)) {
             return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"data\":{\"admin\":\"1\"}}";
-        }else{
+        } else {
             return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"data\":{\"admin\":\"0\"}}";
         }
     }
@@ -68,7 +69,7 @@ public class UserController {
         return "signUp";
     }
 
-    //用户登录接口
+    //用户注册接口
     @RequestMapping(value = "/signUpSubmit", method = RequestMethod.POST)
     @ResponseBody
     public String signUpSubmit(HttpServletRequest request) {
@@ -85,6 +86,18 @@ public class UserController {
             return Strs.FAIL_RETURN_JSON;
         }
         return Strs.SUCCESS_RETURN_JSON;
+    }
+
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public String getUserInfo(HttpServletRequest request) {
+        HttpSession se = request.getSession();
+        if (!CheckUserLogin.check(se)) {
+            return Strs.NO_LOGIN_RETURN_JSON;
+        }
+        String userid = (String) se.getAttribute("userid");
+        String userName = (String) se.getAttribute("userName");
+        return "{\"code\":\"0000\",\"msg\":\"操作成功\",\"data\":{\"userid\":\"" + userid + "\",\"userName\":\"" + userName + "\"}}";
     }
 
     //登录检查接口

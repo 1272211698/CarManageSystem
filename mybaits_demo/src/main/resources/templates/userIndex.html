@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <title>登录页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+    <script src="../static/layui/layui.js" charset="utf-8"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body style="background: url(../static/images/userbackground.jpg);">
+<!--顶栏-->
+    <div style="width: 100%; height: 50px; background-color: #009f95; text-align: right">
+        <div id="showUserName" style="height: 50px; width: auto; font-size: 30px; line-height: 50px; float: right" >用户名占位符 </div>
+    </div>
+<!--页面主体-->
+    <div style="width: 1400px; height: auto; margin: 0 auto">
+        <!--公告区域-->
+        <div style="width: 100%; height: auto; background: #ffffff; text-align: left; font-size: 20px">
+            <div style="width: 100%; height: 30px; text-align: right; line-height: 30px" onclick="showMoreNotice()">更多公告</div>
+            <div id="showNotice">公告占位符</div>
+        </div>
+        <!--展示区域-->
+        <button type="button" class="layui-btn" id="addCar">添加汽车</button>
+        <div style="width: 100%; height: auto;" id="carList"></div>
+    </div>
+<!--添加用表单-->
+<div style="display: none; width: 300px; height: auto; padding: 20px" id="addFormDiv">
+    <form class="layui-form" action="" lay-filter="addForm"  id="addForm">
+        <div class="layui-form-item" style="display: none">
+            <label class="layui-form-label">用户id</label>
+            <div class="layui-input-block">
+                <input type="text" name="userid" placeholder="userid" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车型</label>
+            <div class="layui-input-block">
+                <input type="text" name="model" lay-verify="required" lay-reqtext="车型是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">里程数</label>
+            <div class="layui-input-block">
+                <input type="text" name="milage" lay-verify="doubleCheck" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排量</label>
+            <div class="layui-input-block">
+                <input type="text" name="capacity" lay-verify="doubleCheck" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div>
+            <label class="layui-form-label">生产日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="production" id="production" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div>
+            <label class="layui-form-label">销售日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="purchase" id="purchase" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="addSubmit">立即提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div style="display: none; width: 300px; height: auto; padding: 20px" id="editFormDiv">
+    <form class="layui-form" action="" lay-filter="editForm"  id="editForm">
+        <div class="layui-form-item" style="display: none">
+            <label class="layui-form-label">车辆id</label>
+            <div class="layui-input-block">
+                <input type="text" name="id" placeholder="id" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车型</label>
+            <div class="layui-input-block">
+                <input type="text" name="model" lay-verify="required" lay-reqtext="车型是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">里程数</label>
+            <div class="layui-input-block">
+                <input type="text" name="milage" lay-verify="doubleCheck" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排量</label>
+            <div class="layui-input-block">
+                <input type="text" name="capacity" lay-verify="doubleCheck" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div>
+            <label class="layui-form-label">生产日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="production" id="production1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div>
+            <label class="layui-form-label">销售日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="purchase" id="purchase1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="editSubmit">立即提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+
+<script>
+    //磁贴样式
+    var magnetStyleList = [
+        '<div style="width: 300px; height: 300px; padding: 50px; margin-top: 50px; margin-left: 50px; float: left; border-radius: 60px; line-height: 60px; font-size: 20px; background-color: rgb(75,194,112)"',
+        '<div style="width: 300px; height: 300px; padding: 50px; margin-top: 50px; margin-left: 50px; float: left; border-radius: 60px; line-height: 60px; font-size: 20px; background-color: rgb(218,233,37)"',
+        '<div style="width: 300px; height: 300px; padding: 50px; margin-top: 50px; margin-left: 50px; float: left; border-radius: 60px; line-height: 60px; font-size: 20px; background-color: rgb(255,128,128)"',
+        '<div style="width: 300px; height: 300px; padding: 50px; margin-top: 50px; margin-left: 50px; float: left; border-radius: 60px; line-height: 60px; font-size: 20px; background-color: rgb(21,159,238)"',
+        '<div style="width: 300px; height: 300px; padding: 50px; margin-top: 50px; margin-left: 50px; float: left; border-radius: 60px; line-height: 60px; font-size: 20px; background-color: rgb(20,121,211)"'
+    ]
+    //注册layer组件
+    layui.use(['layer','form','laydate'], function () {
+        var layer = layui.layer,
+            form = layui.form,
+            laydate = layui.laydate,
+            $=layui.jquery;
+
+        laydate.render({
+            elem: '#production'
+        });
+        laydate.render({
+            elem: '#purchase'
+        });
+        laydate.render({
+            elem: '#production1'
+        });
+        laydate.render({
+            elem: '#purchase1'
+        });
+        form.verify({
+            doubleCheck: [
+                /^(0|[1-9]\d*)(\.\d*)?$/
+                ,'请填写一个非负浮点数'
+            ]
+        });
+        $("#addCar").click(function () {
+            layui.form.val('addForm', {
+                "userid":userid
+            });
+            layer.open({
+                type: 1,
+                shade: false,
+                title: false, //不显示标题
+                content: $('#addFormDiv'),//捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                cancel: function(){
+                    layer.close(layer.index);
+                    $('#addForm')[0].reset();
+                }
+            });
+        });
+
+        form.on('submit(addSubmit)', function(data){
+            layer.close(layer.index);
+            $('#addForm')[0].reset();
+            var url = "http://localhost:8080/car/userAddCar";
+            $.ajax({
+                type: "POST", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+                url: url,    //传输地址的URL
+                data: data.field, //data代表我们的数据  key -value类型的数据
+                dataType: 'JSON',
+                async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+                success: function (data)//success、error代表是否返回成功
+                {
+                    console.log(data);
+                    if (data.code == "7777") {
+                        layer.msg("请登录！！",function () {
+                        });
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg("网络错误！");
+                }
+            });
+        });
+
+        form.on('submit(editSubmit)', function(data){
+            layer.close(layer.index);
+            $('#addForm')[0].reset();
+            var url = "http://localhost:8080/car/userUpdateCar";
+            $.ajax({
+                type: "POST", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+                url: url,    //传输地址的URL
+                data: data.field, //data代表我们的数据  key -value类型的数据
+                dataType: 'JSON',
+                async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+                success: function (data)//success、error代表是否返回成功
+                {
+                    console.log(data);
+                    if (data.code == "7777") {
+                        layer.msg("请登录！！",function () {
+                        });
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg("网络错误！");
+                }
+            });
+        });
+    });
+    //全局变量userid
+    var userid;
+    //获取用户信息同时验证登录
+    getUserInfo();
+    function getUserInfo() {
+        var url = "http://localhost:8080/user/getUserInfo";
+        $.ajax({
+            type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+            url: url,    //传输地址的URL
+            data: {}, //data代表我们的数据  key -value类型的数据
+            dataType:'JSON',
+            async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+            success: function (data)//success、error代表是否返回成功
+            {
+                if(data.code == "7777"){
+                    window.location.href = 'http://localhost:8080/user/login'
+                }else{
+                    userid = data.data.userid;
+                    var html ='当前登录用户：'+ data.data.userName;
+                    html += '<button type="button" class="layui-btn layui-btn-danger" onclick="logout()">登出</button>';
+                    $("#showUserName").html(html);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("网络错误！");
+            }
+        });
+    }
+    //登出接口
+    function logout(){
+        layer.confirm('确定要登出吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            var url = "http://localhost:8080/user/logout";
+            $.ajax({
+                type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+                url: url,    //传输地址的URLsss
+                data: {}, //data代表我们的数据  key -value类型的数据
+                dataType:'JSON',
+                async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+                success: function (data)//success、error代表是否返回成功
+                {
+                    location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg("网络错误！");
+                }
+            });
+        }, function(){});
+    }
+    getNewNotice();
+    function getNewNotice(){
+        var url = "http://localhost:8080/notice/seeNotice";
+        $.ajax({
+            type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+            url: url,    //传输地址的URL
+            data: {"page": '1', 'limit': '10000'}, //data代表我们的数据  key -value类型的数据
+            dataType: 'JSON',
+            async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+            success: function (data)//success、error代表是否返回成功
+            {
+                if (data.code == "7777") {
+                    window.location.href = 'http://localhost:8080/user/login'
+                } else {
+                    var item = data[3].rows.item;
+                    if(item.length == 0){
+                        $("#notices").html("没有公告");
+                        return;
+                    }
+                    var html = '<div>' + item[0].notice + '</div>';
+                    $("#showNotice").html(html);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("网络错误！");
+            }
+        });
+    }
+
+    //展示公告弹层
+    function showMoreNotice(){
+        layer.open({
+            type: 2,
+            title: '公告展示页',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            shade: 0.8,
+            area: ['1000px', '500px'],
+            content: 'notices/' //iframe的url
+        });
+    }
+    showCarList();
+    function showCarList(){
+        var url = "http://localhost:8080/car/selectUserCar";
+        $.ajax({
+            type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+            url: url,    //传输地址的URL
+            data: {}, //data代表我们的数据  key -value类型的数据
+            dataType: 'JSON',
+            async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+            success: function (data)//success、error代表是否返回成功
+            {
+                if (data.code == "7777") {
+                    window.location.href = 'http://localhost:8080/user/login'
+                } else {
+                    if(data.data.length == 0){
+                        $("#carList").html("用户还没有车辆，请添加车辆");
+                        return;
+                    }
+                    var html = '';
+                    var flag = 0;
+                    for (var i = 0; i < data.data.length; i++) {
+                        html += magnetStyleList[flag];
+                        html += 'onclick="cleckList(' + data.data[i].id + ')">';
+                        html += '车型：' + data.data[i].model + '<br>';
+                        html += '排量：' + data.data[i].capacity + '<br>';
+                        html += '里程数：' + data.data[i].milage + '<br>';
+                        html += '生产日期：' + data.data[i].production + '<br>';
+                        html += '销售日期：' + data.data[i].purchase + '<br>';
+                        html += '</div>'
+                        if(flag == 4){
+                            flag = 0;
+                        }else {
+                            flag ++;
+                        }
+                    }
+                    $("#carList").html(html);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("网络错误！");
+            }
+        });
+    }
+    function cleckList(id){
+        layer.closeAll();
+        setCookie('carid',id,1);
+        layer.confirm('请选择要使用的功能',{
+            btn:['保养记录','修改车辆信息','删除车辆']
+            ,yes:function (index){
+                layer.open({
+                    type: 2,
+                    title: '保养记录页',
+                    shadeClose: true,
+                    maxmin: true, //开启最大化最小化按钮
+                    shade: 0.8,
+                    area: ['1000px', '500px'],
+                    content: 'http://localhost:8080/record/recordPage' //iframe的url
+                });
+                layer.close(index);
+            }
+            ,btn2: function(index, layero){
+                //按钮【修改车辆信息】的回调
+                var url = "http://localhost:8080/car/selectCarById";
+                $.ajax({
+                    type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+                    url: url,    //传输地址的URL
+                    data: {"id":id}, //data代表我们的数据  key -value类型的数据
+                    dataType: 'JSON',
+                    async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+                    success: function (data)//success、error代表是否返回成功
+                    {
+                        if (data.code == "7777") {
+                            layer.closeAll();
+                            window.location.href = 'http://localhost:8080/user/login'
+                        } else if(data.code == "0000"){
+                            layui.form.val('editForm', {
+                                "id":id,
+                                "model":data.data.model,
+                                "milage":data.data.milage,
+                                "capacity":data.data.capacity,
+                                "production":data.data.production,
+                                "purchase":data.data.purchase,
+                            });
+                        } else{
+                            layer.closeAll();
+                            layer.msg("操作失败！")
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg("网络错误！");
+                    }
+                });
+                layer.open({
+                    type: 1,
+                    shade: false,
+                    title: false, //不显示标题
+                    content: $('#editFormDiv'),//捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    cancel: function(){
+                        layer.close(layer.index);
+                        $('#editForm')[0].reset();
+                    }
+                });
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+            ,btn3: function(index, layero){
+                //按钮【删除车辆】的回调
+                layer.confirm('确定要删除吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    layer.close(layer.index);
+                    deleteCarByid(id);
+                }, function(){
+                    layer.close(layer.index);
+                });
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+        });
+    }
+    function deleteCarByid(id){
+        var url = "http://localhost:8080/car/userDeleteCar";
+        $.ajax({
+            type: "POST", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+            url: url,    //传输地址的URL
+            data: {"id":id}, //data代表我们的数据  key -value类型的数据
+            dataType: 'JSON',
+            async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+            success: function (data)//success、error代表是否返回成功
+            {
+                console.log(data);
+                if (data.code == "7777") {
+                    layer.msg("请登录！！",function () {
+                    });
+                } else {
+                    layer.msg(data.msg);
+                    showCarList();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("网络错误！");
+            }
+        });
+    }
+    function setCookie(cname,cvalue,exdays)
+    {
+        var d = new Date();
+        d.setTime(d.getTime()+(exdays*24*60*60*1000));
+        var expires = "expires="+d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+    }
+</script>
+</html>

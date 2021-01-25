@@ -212,7 +212,7 @@
                 console.log(JSON.stringify(data.field));
                 $.ajax({
                     url: 'http://localhost:8080/car/userAddCar',
-                    method: 'get',
+                    method: 'POST',
                     data: data.field,
                     dataType: 'JSON',
                     success: function (res) {
@@ -251,7 +251,7 @@
                 console.log(JSON.stringify(data.field));
                 $.ajax({
                     url: 'http://localhost:8080/car/userUpdateCar',
-                    method: 'get',
+                    method: 'POST',
                     data: data.field,
                     dataType: 'JSON',
                     success: function (res) {
@@ -385,7 +385,7 @@
             };
             var url = "http://localhost:8080/car/userDeleteCar";
             $.ajax({
-                type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+                type: "POST", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
                 url: url,    //传输地址的URL
                 data: data, //data代表我们的数据  key -value类型的数据
                 dataType: 'JSON',

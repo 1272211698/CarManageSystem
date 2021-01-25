@@ -22,6 +22,11 @@ public class RecordController {
     @Resource
     private IRecordService recordService;
 
+    @RequestMapping(value = "/recordPage", method = RequestMethod.GET)
+    public String recordPage(HttpServletRequest request){
+        return "recordPage";
+    }
+
     //前台查询保养记录接口
     @RequestMapping(value = "/selectRecordByCarid", method = RequestMethod.GET)
     @ResponseBody

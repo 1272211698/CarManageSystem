@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 
 <head>
     <meta charset="utf-8">
@@ -29,11 +29,6 @@
             style="width: 100px; margin-left: 100px; margin-top: 40px;" onclick="loginSubmit()">登录</button>
         <button type="button" class="layui-btn layui-btn-lg layui-btn-warm"
             style="width: 100px; margin-left: 100px; margin-top: 40px;" onclick="goSignUp()">注册</button>
-        <!-- <div style="background-color: blue; width: 400px; height: 70px; margin-top: 22.5px; margin-left: 50px;">
-        
-    </div>
-    <div style="background-color: blue; width: 400px; height: 70px; margin-top: 22.5px; margin-left: 50px;">123</div>
-    <div style="background-color: blue; width: 400px; height: 70px; margin-top: 22.5px; margin-left: 50px;">123</div> -->
     </div>
 </body>
 <script>
@@ -65,7 +60,7 @@
                     if (data.data.admin == 1) {
                         window.location.href = 'http://localhost:8080/car/back'
                     } else {
-                        window.location.href = 'http://localhost:8080/car/userCarList'
+                        window.location.href = 'http://localhost:8080/car/userIndex'
                     }
                 }
             },

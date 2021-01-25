@@ -32,7 +32,7 @@ public class ICarServiceImpl implements ICarService {
 
     //前台用户删除车辆信息接口实现
     @Override
-    public Integer UserDeleteCarById(Integer carid, Integer userid) {
+    public Integer userDeleteCarById(Integer carid, Integer userid) {
         Car carSelected = carMapper.selectCarById(carid);
         if (carSelected == null || !carSelected.getUserid().equals(userid)) {
             return 0;
@@ -56,6 +56,16 @@ public class ICarServiceImpl implements ICarService {
     public List<Car> selectAll(int page, int limit) throws Exception {
         int pageIndex = (page - 1) * limit;
         return this.carMapper.selectAll(pageIndex, limit);
+    }
+
+    @Override
+    public Car selectCarById(Integer carid, Integer userid) {
+        Car car = this.carMapper.selectCarById(carid);
+        if(car.getUserid().equals(userid)){
+            return car;
+        }else{
+            return null;
+        }
     }
 
     @Override

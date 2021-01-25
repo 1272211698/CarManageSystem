@@ -25,7 +25,6 @@ public class IUserServiceImpl implements IUserService {
         try {
             return this.userMapper.signUpSubmit(user);
         } catch (Exception e) {
-            //e.printStackTrace();
             return 0;
         }
     }
