@@ -20,6 +20,11 @@ public class ISuggestServiceImpl implements ISuggestService {
     }
 
     @Override
+    public int updataReply(Suggest suggest) {
+        return this.suggestMapper.updataReply(suggest);
+    }
+
+    @Override
     public int deleteSuggest(int id) {
         return this.suggestMapper.deleteSuggest(id);
     }
